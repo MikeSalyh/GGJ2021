@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public int currentRoundIndex = -1;
     public GameState CurrentState = GameState.GameOver;
     public Card.Suit luckySuit;
-    public Player player;
+    public Player[] players;
 
     //DELEGATES
     public delegate void GameAction();
@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        player.Init();
     }
 
     // Start is called before the first frame update
@@ -59,10 +58,16 @@ public class GameManager : MonoBehaviour
 
     protected void NewGame()
     {
-        player.OnBust += EndRound;
-        player.OnTake += EndRound;
-        player.OnJackpot += EndRound;
-
+        players = new Player[numPlayers];
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i] = new Player();
+            players[i].Init();
+            players[i].OnBust += EndRound;
+            players[i].OnTake += EndRound;
+            players[i].OnJackpot += EndRound;
+        }
+        
         GenerateFullDeck();
         currentRoundIndex = -1;
         if (OnNewGame != null)
@@ -71,10 +76,24 @@ public class GameManager : MonoBehaviour
         StartNewRound();
     }
 
+    public bool AllActionsDone
+    {
+        get
+        {
+            for (int i = 0; i < players.Length; i++) {
+                if(players[i].currentState != Player.PlayerState.Bust &&  players[i].currentState != Player.PlayerState.Take)
+                    return false;
+            }
+            return true;
+        }
+    }
+
     public void StartNewRound()
     {
         currentRoundIndex++;
-        player.GenerateNewHand();
+        for(int i = 0; i < players.Length; i++)
+            players[i].GenerateNewHand();
+
         luckySuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length); //randomize the lucky suit.
 
         //This may become a coroutine after animation is added
@@ -82,7 +101,8 @@ public class GameManager : MonoBehaviour
             OnNewRound.Invoke();
 
         //This may become a coroutine after animation is added
-        player.currentState = Player.PlayerState.PlayerTurn;
+        for (int i = 0; i < players.Length; i++)
+            players[i].currentState = Player.PlayerState.PlayerTurn;
         CurrentState = GameState.Playing;
     }
 
@@ -111,8 +131,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
-    
 
     public void ResetGame()
     {
