@@ -18,7 +18,7 @@ public class CardVisualization : MonoBehaviour
     [SerializeField] private SuitSprites[] sprites;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         image = GetComponent<Image>();   
     }
