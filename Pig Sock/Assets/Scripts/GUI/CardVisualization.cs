@@ -28,6 +28,11 @@ public class CardVisualization : MonoBehaviour
         image.sprite = GetSprite(c);
     }
 
+    public void ShowBack()
+    {
+        image.sprite = backSprite;
+    }
+
     private Sprite GetSprite(Card c)
     {
         if (c.isJoker)
@@ -40,7 +45,7 @@ public class CardVisualization : MonoBehaviour
             {
                 if (sprites[i].suit == c.suit)
                 {
-                    return sprites[i].sprites[c.value];
+                    return sprites[i].sprites[c.value - 1];
                 }
             }
         }

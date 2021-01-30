@@ -16,4 +16,10 @@ public class Card
     public Suit suit;
     public int value;
     public bool isJoker = false;
+
+    public Card(Suit suit, int value)
+    {
+        this.suit = suit;
+        this.value = value;
+    }
 }
