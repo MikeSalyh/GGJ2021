@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CoreLoopGraphics : MonoBehaviour
 {
     public Button reset, hitMe, take, nextRound;
-    public TextMeshProUGUI scoreList, cardsRemainingText, multiplierText, collectionValue;
+    public TextMeshProUGUI scoreList, multiplierText, collectionValue;
     public CardVisualization card;
     public SuitGraphic luckySuit;
     public Player player1;
@@ -22,6 +22,7 @@ public class CoreLoopGraphics : MonoBehaviour
         GameManager.instance.OnNewGame += DoNewGameGraphics;
         GameManager.instance.OnRoundOver += UpdateScoreList;
         GameManager.instance.OnNewRound += DoNewRoundGraphics;
+        GameManager.instance.OnGameOver += UpdateScoreList;
         player1.OnHit += DoUpdateCard;
         player1.OnTake += DoTakeCard;
     }
@@ -38,7 +39,7 @@ public class CoreLoopGraphics : MonoBehaviour
     {
         UpdateScoreList();
         card.ShowBack();
-        collectionValue.gameObject.SetActive(false);
+        collectionValue.text = "Take Card";
     }
 
     void DoNewRoundGraphics()
@@ -47,28 +48,36 @@ public class CoreLoopGraphics : MonoBehaviour
         UpdateScoreList();
         card.ShowBack();
         luckySuit.SetSuit(GameManager.instance.luckySuit);
-        collectionValue.gameObject.SetActive(false);
-        cardsRemainingText.text = (GameManager.instance.cardsPerDeck + GameManager.instance.jokersPerDeck - player1.currentCardIndex - 1).ToString();
+        collectionValue.text = "Take Card";
+        //cardsRemainingText.text = (GameManager.instance.cardsPerDeck + GameManager.instance.jokersPerDeck - player1.currentCardIndex - 1).ToString();
     }
 
     void UpdateScoreList()
     {
-        scoreList.text = "ROUND SCORES:";
+        scoreList.text = "";
+        int finalScore = 0;
         for (int i = 0; i < player1.roundScores.Length; i++)
         {
             scoreList.text += "\n";
+            if (GameManager.instance.currentRoundIndex == i) scoreList.text += "<color=yellow>";
             scoreList.text += player1.roundScores[i] >= 0 ? player1.roundScores[i].ToString() : "?";
+            if (GameManager.instance.currentRoundIndex == i) scoreList.text += "</color>";
+            finalScore += player1.roundScores[i];
         }
-        multiplierText.text = GameManager.instance.matchMultiplier.ToString() + "x";
+
+        if (GameManager.instance.CurrentState == GameManager.GameState.GameOver)
+        {
+            scoreList.text += "\n--\n";
+            scoreList.text += "<color=green>" + finalScore.ToString() + "</color>";
+        }
+        multiplierText.text = (GameManager.instance.matchMultiplier.ToString() + "x") + " points if matching";
     }
 
     void DoUpdateCard(Card c)
     {
-        cardsRemainingText.text = (GameManager.instance.cardsPerDeck + GameManager.instance.jokersPerDeck - player1.currentCardIndex - 1).ToString();
+        //cardsRemainingText.text = (GameManager.instance.cardsPerDeck + GameManager.instance.jokersPerDeck - player1.currentCardIndex - 1).ToString();
         card.SetToCard(c);
-        collectionValue.gameObject.SetActive(true);
-        //bool isMatch <-- WIP Need matching logic.
-        collectionValue.text = string.Format("(+{0})", player1.CurrentPot);
+        collectionValue.text = "Take Card   " + string.Format("(+{0})", player1.CurrentPot);
     }
 
     void DoTakeCard(Card c)

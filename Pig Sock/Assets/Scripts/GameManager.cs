@@ -91,7 +91,8 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.RoundOver;
         if (OnRoundOver != null)
             OnRoundOver.Invoke();
-        if (currentRoundIndex == maxRounds)
+
+        if (currentRoundIndex + 1 >= maxRounds)
         {
             DoGameOver();
         }
