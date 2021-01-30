@@ -29,9 +29,14 @@ public class CoreLoopGraphics : MonoBehaviour
 
     void DoNewGameGraphics()
     {
-        for (int i = 0; i < playersGUIs.Length; i++)
+        foreach (PlayerGUI g in playersGUIs)
+            g.gameObject.SetActive(false);
+
+        if (playersGUIs.Length < GameManager.instance.numPlayers)
+            throw new System.Exception("There arent enough GUI elements to support that many players");
+        for (int i = 0; i < GameManager.instance.numPlayers; i++)
         {
-            Debug.Log(GameManager.instance.players[i]);
+            playersGUIs[i].gameObject.SetActive(true);
             playersGUIs[i].Init(GameManager.instance.players[i]);
             playersGUIs[i].DoNewGameGraphics();
         }
@@ -39,7 +44,7 @@ public class CoreLoopGraphics : MonoBehaviour
 
     void DoUpdateScore()
     {
-        for (int i = 0; i < playersGUIs.Length; i++)
+        for (int i = 0; i < GameManager.instance.numPlayers; i++)
             playersGUIs[i].UpdateScoreList();
     }
 

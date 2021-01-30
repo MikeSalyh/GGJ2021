@@ -296,6 +296,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a819e1ca29ea93f4aa0f36770593b28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRef:
+    myHand: []
+    currentCardIndex: -1
+    roundScores: 
+    currentState: 0
   hitMe: {fileID: 716102479}
   take: {fileID: 952250242}
   scoreList: {fileID: 1827480027}
@@ -434,6 +439,7 @@ MonoBehaviour:
   currentRoundIndex: 0
   CurrentState: 4
   luckySuit: 0
+  players: []
   fullDeck: []
   debug__putJokersAtEnd: 0
 --- !u!4 &107045013
@@ -3144,6 +3150,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a819e1ca29ea93f4aa0f36770593b28c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerRef:
+    myHand: []
+    currentCardIndex: -1
+    roundScores: 
+    currentState: 0
   hitMe: {fileID: 1937417649}
   take: {fileID: 1687015716}
   scoreList: {fileID: 783984570}

@@ -38,7 +38,6 @@ public class PlayerGUI : MonoBehaviour
 
     public void UpdateScoreList()
     {
-        Debug.Log("Updating score list!");
         scoreList.text = "";
         int finalScore = 0;
         if (playerRef != null && playerRef.roundScores != null)
