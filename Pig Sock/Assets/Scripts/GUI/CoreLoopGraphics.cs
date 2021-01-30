@@ -10,6 +10,7 @@ public class CoreLoopGraphics : MonoBehaviour
     public Button reset, hitMe, take, nextRound;
     public TextMeshProUGUI scoreList, cardsRemainingText, multiplierText, collectionValue;
     public CardVisualization card;
+    public SuitGraphic luckySuit;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class CoreLoopGraphics : MonoBehaviour
         take.onClick.AddListener(gameManager.TakeCard);
         nextRound.onClick.AddListener(gameManager.StartNewRound);
         gameManager.OnNewGame += DoNewGameGraphics;
+        gameManager.OnRoundOver += UpdateScoreList;
         gameManager.OnNewRound += DoNewRoundGraphics;
         gameManager.OnHit += DoUpdateCard;
     }
@@ -41,6 +43,7 @@ public class CoreLoopGraphics : MonoBehaviour
     {
         UpdateScoreList();
         card.ShowBack();
+        luckySuit.SetSuit(gameManager.luckySuit);
         collectionValue.gameObject.SetActive(false);
     }
 

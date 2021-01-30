@@ -30,6 +30,7 @@ public class CoreLoop : MonoBehaviour
     public int currentCardIndex = -1;
     public int[] roundScores;
     public GameState CurrentState = GameState.GameOver;
+    public Card.Suit luckySuit;
 
     //DELEGATES
     public delegate void CardAction(Card c);
@@ -54,7 +55,12 @@ public class CoreLoop : MonoBehaviour
 
     public int CurrentPot
     {
-        get { return CurrentCard.value; } //WIP -- needs the match multiplier.
+        get {
+            if (CurrentCard.suit == luckySuit)
+                return CurrentCard.value * matchMultiplier;
+            else
+                return CurrentCard.value;
+        } 
     }
 
     // Start is called before the first frame update
@@ -82,6 +88,8 @@ public class CoreLoop : MonoBehaviour
         currentRoundIndex++;
         CurrentState = GameState.NewRound;
         GenerateNewHand();
+        luckySuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length); //randomize the lucky suit.
+
         //This may become a coroutine after animation is added
         if (OnNewRound != null)
             OnNewRound.Invoke();
