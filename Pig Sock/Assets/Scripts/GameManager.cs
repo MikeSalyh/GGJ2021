@@ -8,8 +8,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    public enum ShuffleMode
+    {
+        Increasing,
+        RandomBetter,
+        FullRandom
+    }
+
     [Header("Game Options")]
-    public bool useSequentialValuesInHand = true;
+    public ShuffleMode shuffleMode;
     public bool useAddativeValues = false;
 
     [Header("Variables")]

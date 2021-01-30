@@ -40,7 +40,7 @@ public class Player
     {
         currentCardIndex = -1;
         myHand = new List<Card>();
-        if (GameManager.instance.useSequentialValuesInHand)
+        if (GameManager.instance.shuffleMode == GameManager.ShuffleMode.Increasing)
         {
             for (int i = 0; i < GameManager.instance.cardsPerDeck; i++)
             {
@@ -48,10 +48,15 @@ public class Player
                 myHand.Add(new Card(randomSuit, i + 1));
             }
         }
-        else
+        else if (GameManager.instance.shuffleMode == GameManager.ShuffleMode.RandomBetter)
         {
             myHand = GameManager.instance.fullDeck.OrderBy(x => UnityEngine.Random.value).Take(GameManager.instance.cardsPerDeck).OrderBy(x => x.value).ToList<Card>();
         }
+        else
+        {
+            myHand = GameManager.instance.fullDeck.OrderBy(x => UnityEngine.Random.value).Take(GameManager.instance.cardsPerDeck).ToList<Card>();
+        }
+
         for (int i = 0; i < GameManager.instance.jokersPerDeck; i++)
         {
             Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);

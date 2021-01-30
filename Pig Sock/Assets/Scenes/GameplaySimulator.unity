@@ -428,10 +428,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7237f951e1712a34983c4c0dbb66fd40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSequentialValuesInHand: 1
+  shuffleMode: 2
   useAddativeValues: 0
   numPlayers: 2
-  maxRounds: 5
+  maxRounds: 3
   cardsPerDeck: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
