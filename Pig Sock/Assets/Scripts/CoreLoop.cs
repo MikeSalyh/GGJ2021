@@ -20,6 +20,7 @@ public class CoreLoop : MonoBehaviour
         PlayerTurn,
         Reveal,
         Bust,
+        Jackpot,
         GameOver
     }
 
@@ -31,15 +32,17 @@ public class CoreLoop : MonoBehaviour
     public GameState CurrentState = GameState.GameOver;
 
     //DELEGATES
-    public delegate void CardAction(Card c = null);
+    public delegate void CardAction(Card c);
     public CardAction OnBust;
     public CardAction OnHit;
     public CardAction OnTake;
+    public CardAction OnJackpot;
 
     public delegate void GameAction();
     public GameAction OnNewGame;
     public GameAction OnGameOver;
     public GameAction OnNewRound;
+    public GameAction OnRoundOver;
 
     [SerializeField] private Card[] fullDeck;
     [SerializeField] private List<Card> myHand;
@@ -49,18 +52,15 @@ public class CoreLoop : MonoBehaviour
         get { return myHand[currentCardIndex]; } 
     }
 
-
+    public int CurrentPot
+    {
+        get { return CurrentCard.value; } //WIP -- needs the match multiplier.
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         NewGame();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     protected void NewGame()
@@ -74,15 +74,32 @@ public class CoreLoop : MonoBehaviour
         if (OnNewGame != null)
             OnNewGame.Invoke();
 
-        NewRound();
+        StartNewRound();
     }
 
-    protected void NewRound()
+    public void StartNewRound()
     {
         currentRoundIndex++;
+        CurrentState = GameState.NewRound;
         GenerateNewHand();
+        //This may become a coroutine after animation is added
         if (OnNewRound != null)
             OnNewRound.Invoke();
+
+        //This may become a coroutine after animation is added
+        CurrentState = GameState.PlayerTurn;
+    }
+
+    protected void EndRound()
+    {
+        roundScores[currentRoundIndex] = CurrentPot;
+        if (OnRoundOver != null)
+            OnRoundOver.Invoke();
+
+        if (currentRoundIndex == maxRounds)
+        {
+            DoGameOver();
+        }
     }
 
     private void GenerateFullDeck()
@@ -130,19 +147,49 @@ public class CoreLoop : MonoBehaviour
 
     public void HitMe()
     {
+        currentCardIndex++;
+        CurrentState = GameState.Reveal; //only matters for future corotuines.
         if (OnHit != null)
-            OnHit.Invoke();
+            OnHit.Invoke(CurrentCard);
+
+        if (CurrentCard.isJoker)
+        {
+            Bust();
+        }
+        else
+        {
+            CurrentState = GameState.PlayerTurn;
+        }
     }
 
     public void TakeCard()
     {
         if (OnTake != null)
-            OnTake.Invoke();
+            OnTake.Invoke(CurrentCard);
     }
 
     protected void Bust()
     {
+        CurrentState = GameState.Bust;
         if (OnBust != null)
-            OnBust.Invoke();
+            OnBust.Invoke(CurrentCard);
+
+        EndRound();
+    }
+
+    protected void Jackpot()
+    {
+        CurrentState = GameState.Jackpot;
+        if (OnJackpot != null)
+            OnJackpot.Invoke(CurrentCard);
+
+        EndRound();
+    }
+
+    protected void DoGameOver()
+    {
+        CurrentState = GameState.GameOver;
+        if (OnGameOver != null)
+            OnGameOver.Invoke();
     }
 }

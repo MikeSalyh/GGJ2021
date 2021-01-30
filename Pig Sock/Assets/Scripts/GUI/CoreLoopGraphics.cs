@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CoreLoopGraphics : MonoBehaviour
 {
     public CoreLoop gameManager;
-    public Button reset, hitMe, take;
+    public Button reset, hitMe, take, nextRound;
     public TextMeshProUGUI scoreList, cardsRemainingText, multiplierText, collectionValue;
     public CardVisualization card;
 
@@ -16,6 +16,7 @@ public class CoreLoopGraphics : MonoBehaviour
         reset.onClick.AddListener(gameManager.ResetGame);
         hitMe.onClick.AddListener(gameManager.HitMe);
         take.onClick.AddListener(gameManager.TakeCard);
+        nextRound.onClick.AddListener(gameManager.StartNewRound);
         gameManager.OnNewGame += DoNewGameGraphics;
         gameManager.OnNewRound += DoNewRoundGraphics;
         gameManager.OnHit += DoUpdateCard;
@@ -25,7 +26,8 @@ public class CoreLoopGraphics : MonoBehaviour
     void Update()
     {
         hitMe.interactable = gameManager.CurrentState == CoreLoop.GameState.PlayerTurn;
-        take.interactable = gameManager.CurrentState == CoreLoop.GameState.PlayerTurn;
+        take.interactable = gameManager.CurrentState == CoreLoop.GameState.PlayerTurn && gameManager.currentCardIndex >= 0;
+        nextRound.interactable = gameManager.CurrentState == CoreLoop.GameState.Bust || gameManager.CurrentState == CoreLoop.GameState.Jackpot;
     }
 
     void DoNewGameGraphics()
@@ -59,6 +61,6 @@ public class CoreLoopGraphics : MonoBehaviour
         card.SetToCard(c);
         collectionValue.gameObject.SetActive(true);
         //bool isMatch <-- WIP Need matching logic.
-        collectionValue.text = string.Format("(+{0})", c.value);
+        collectionValue.text = string.Format("(+{0})", gameManager.CurrentPot);
     }
 }
