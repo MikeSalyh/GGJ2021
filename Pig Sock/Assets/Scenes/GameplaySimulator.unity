@@ -371,10 +371,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useSequentialValuesInHand: 1
   maxRounds: 5
-  maxCardsPerHand: 13
+  cardsPerDeck: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
-  jokersPerHand: 1
+  jokersPerDeck: 1
   currentRoundIndex: 0
   currentCardIndex: 0
   roundScores: 
@@ -382,6 +382,7 @@ MonoBehaviour:
   luckySuit: 0
   fullDeck: []
   myHand: []
+  debug__putJokersAtEnd: 0
 --- !u!4 &107045013
 Transform:
   m_ObjectHideFlags: 0

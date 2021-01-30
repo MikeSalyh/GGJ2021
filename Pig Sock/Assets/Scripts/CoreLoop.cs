@@ -9,10 +9,10 @@ public class CoreLoop : MonoBehaviour
     [Header("Game Options")]
     public bool useSequentialValuesInHand = true;
     public int maxRounds = 5;
-    public int maxCardsPerHand = 13;
+    public int cardsPerDeck = 13;
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
-    public int jokersPerHand = 1;
+    public int jokersPerDeck = 1;
 
     public enum GameState
     {
@@ -20,6 +20,7 @@ public class CoreLoop : MonoBehaviour
         PlayerTurn,
         Reveal,
         Bust,
+        Take,
         Jackpot,
         GameOver
     }
@@ -47,6 +48,8 @@ public class CoreLoop : MonoBehaviour
 
     [SerializeField] private Card[] fullDeck;
     [SerializeField] private List<Card> myHand;
+
+    public bool debug__putJokersAtEnd = false;
 
     public Card CurrentCard
     {
@@ -130,7 +133,7 @@ public class CoreLoop : MonoBehaviour
         myHand = new List<Card>();
         if (useSequentialValuesInHand)
         {
-            for (int i = 0; i < maxCardsPerHand; i++)
+            for (int i = 0; i < cardsPerDeck; i++)
             {
                 Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
                 myHand.Add(new Card(randomSuit, i+1));
@@ -138,12 +141,15 @@ public class CoreLoop : MonoBehaviour
         }
         else
         {
-            myHand = fullDeck.OrderBy(x => UnityEngine.Random.value).Take(maxCardsPerHand).OrderBy(x => x.value).ToList<Card>();
+            myHand = fullDeck.OrderBy(x => UnityEngine.Random.value).Take(cardsPerDeck).OrderBy(x => x.value).ToList<Card>();
         }
-        for (int i = 0; i < jokersPerHand; i++)
+        for (int i = 0; i < jokersPerDeck; i++)
         {
             Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
             int randomIndex = UnityEngine.Random.Range(1, myHand.Count);
+
+            if (debug__putJokersAtEnd)
+                randomIndex = myHand.Count;
             myHand.Insert(randomIndex, new Card(randomSuit, 0, true));
         }
     }
@@ -166,14 +172,20 @@ public class CoreLoop : MonoBehaviour
         }
         else
         {
-            CurrentState = GameState.PlayerTurn;
+            if (currentCardIndex + 1 >= cardsPerDeck)
+                CurrentState = GameState.Jackpot;
+            else
+                CurrentState = GameState.PlayerTurn;
         }
     }
 
     public void TakeCard()
     {
+        CurrentState = GameState.Take;
         if (OnTake != null)
             OnTake.Invoke(CurrentCard);
+
+        EndRound();
     }
 
     protected void Bust()
