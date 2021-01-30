@@ -8,6 +8,7 @@ public class CoreLoop : MonoBehaviour
 {
     [Header("Game Options")]
     public bool useSequentialValuesInHand = true;
+    public bool useAddativeValues = false;
     public int maxRounds = 5;
     public int cardsPerDeck = 13;
     public int numCardsPerSuit = 13;
@@ -59,10 +60,22 @@ public class CoreLoop : MonoBehaviour
     public int CurrentPot
     {
         get {
-            if (CurrentCard.suit == luckySuit)
-                return CurrentCard.value * matchMultiplier;
+            if (useAddativeValues)
+            {
+                int output = 0;
+                for (int i = 0; i <= CurrentCard.value; i++)
+                    output += i;
+                if (CurrentCard.suit == luckySuit)
+                    output *= 2;
+                return output;
+            }
             else
-                return CurrentCard.value;
+            {
+                if (CurrentCard.suit == luckySuit)
+                    return CurrentCard.value * matchMultiplier;
+                else
+                    return CurrentCard.value;
+            }
         } 
     }
 

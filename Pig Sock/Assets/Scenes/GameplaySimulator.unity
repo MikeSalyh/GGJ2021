@@ -370,6 +370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useSequentialValuesInHand: 1
+  useAddativeValues: 0
   maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13
