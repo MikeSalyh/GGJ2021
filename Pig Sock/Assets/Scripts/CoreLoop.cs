@@ -12,6 +12,7 @@ public class CoreLoop : MonoBehaviour
     public int maxCardsPerHand = 13;
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
+    public int jokersPerHand = 1;
 
     public enum GameState
     {
@@ -41,8 +42,7 @@ public class CoreLoop : MonoBehaviour
     public GameAction OnNewRound;
 
     [SerializeField] private Card[] fullDeck;
-    [SerializeField] private Card jokerCard = new Card(Card.Suit.Clubs, int.MaxValue) { isJoker = true };
-    [SerializeField] private Card[] myHand;
+    [SerializeField] private List<Card> myHand;
 
     public Card CurrentCard
     {
@@ -102,18 +102,24 @@ public class CoreLoop : MonoBehaviour
     private void GenerateNewHand()
     {
         currentCardIndex = -1;
-        myHand = new Card[maxCardsPerHand];
+        myHand = new List<Card>();
         if (useSequentialValuesInHand)
         {
-            for (int i = 0; i < myHand.Length; i++)
+            for (int i = 0; i < maxCardsPerHand; i++)
             {
                 Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
-                myHand[i] = new Card(randomSuit, i+1);
+                myHand.Add(new Card(randomSuit, i+1));
             }
         }
         else
         {
-            myHand = fullDeck.OrderBy(x => UnityEngine.Random.value).Take(maxCardsPerHand).OrderBy(x => x.value).ToArray();
+            myHand = fullDeck.OrderBy(x => UnityEngine.Random.value).Take(maxCardsPerHand).OrderBy(x => x.value).ToList<Card>();
+        }
+        for (int i = 0; i < jokersPerHand; i++)
+        {
+            Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
+            int randomIndex = UnityEngine.Random.Range(1, myHand.Count);
+            myHand.Insert(randomIndex, new Card(randomSuit, 0, true));
         }
     }
 

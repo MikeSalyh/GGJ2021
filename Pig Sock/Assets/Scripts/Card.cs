@@ -17,9 +17,10 @@ public class Card
     public int value;
     public bool isJoker = false;
 
-    public Card(Suit suit, int value)
+    public Card(Suit suit, int value, bool isJoker = false)
     {
         this.suit = suit;
         this.value = value;
+        this.isJoker = isJoker;
     }
 }

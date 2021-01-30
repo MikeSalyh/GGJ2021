@@ -358,15 +358,12 @@ MonoBehaviour:
   maxCardsPerHand: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
+  jokersPerHand: 1
   currentRoundIndex: 0
   currentCardIndex: 0
   roundScores: 
   CurrentState: 4
   fullDeck: []
-  jokerCard:
-    suit: 3
-    value: 2147483647
-    isJoker: 1
   myHand: []
 --- !u!4 &107045013
 Transform:
