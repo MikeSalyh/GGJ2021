@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class Player
 {
     public List<Card> myHand;
@@ -14,6 +15,7 @@ public class Player
     public CardAction OnHit;
     public CardAction OnTake;
     public CardAction OnJackpot;
+    public GameManager.GameAction OnEndTurn;
 
     public enum PlayerState
     {
@@ -29,7 +31,9 @@ public class Player
     public void Init()
     {
         GameManager.instance.OnNewGame += HandleNewGame;
-        GameManager.instance.OnRoundOver += HandleRoundEnd;
+        OnBust += EndTurn;
+        OnTake += EndTurn;
+        OnJackpot += EndTurn;
     }
 
     public void GenerateNewHand()
@@ -57,6 +61,14 @@ public class Player
                 randomIndex = myHand.Count;
             myHand.Insert(randomIndex, new Card(randomSuit, 0, true));
         }
+    }
+
+    public void EndTurn(Card c = null)
+    {
+        roundScores[GameManager.instance.currentRoundIndex] = CurrentPot;
+        currentState = PlayerState.Waiting;
+        if (OnEndTurn != null)
+            OnEndTurn.Invoke();
     }
 
     public void HitMe()
@@ -108,14 +120,11 @@ public class Player
             roundScores[i] = -1;
     }
 
-    public void HandleRoundEnd()
-    {
-        roundScores[GameManager.instance.currentRoundIndex] = CurrentPot;
-    }
-
     public Card CurrentCard
     {
-        get { return myHand[currentCardIndex]; }
+        get {
+            return myHand[currentCardIndex];
+        }
     }
 
     public int CurrentPot

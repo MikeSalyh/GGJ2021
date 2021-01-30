@@ -18,14 +18,14 @@ public class PlayerGUI : MonoBehaviour
         take.onClick.AddListener(playerRef.TakeCard);
         playerRef.OnHit += DoUpdateCard;
         playerRef.OnTake += DoTakeCard;
-        //playerRef.OnBust += DoUpdateCard;
+        playerRef.OnEndTurn += UpdateScoreList;
     }
 
     public void DoNewGameGraphics()
     {
-        UpdateScoreList();
         card.ShowBack();
         collectionValue.text = "Take Card";
+        UpdateScoreList();
     }
 
     public void DoNewRoundGraphics()
@@ -38,6 +38,7 @@ public class PlayerGUI : MonoBehaviour
 
     public void UpdateScoreList()
     {
+        Debug.Log("Updating score list!");
         scoreList.text = "";
         int finalScore = 0;
         if (playerRef != null && playerRef.roundScores != null)

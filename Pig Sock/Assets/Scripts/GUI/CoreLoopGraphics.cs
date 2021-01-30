@@ -19,7 +19,6 @@ public class CoreLoopGraphics : MonoBehaviour
         GameManager.instance.OnRoundOver += DoUpdateScore;
         GameManager.instance.OnNewRound += DoNewRoundGraphics;
         GameManager.instance.OnGameOver += DoUpdateScore;
-
     }
 
     // Update is called once per frame
@@ -52,16 +51,3 @@ public class CoreLoopGraphics : MonoBehaviour
             playersGUIs[i].DoNewRoundGraphics();
     }
 }
-
-//    void DoUpdateCard(Card c)
-//    {
-//        for (int i = 0; i < playersGUIs.Length; i++)
-//            playersGUIs[i].DoUpdateCard(c);
-//    }
-
-//    void DoTakeCard(Card c)
-//    {
-//        for (int i = 0; i < playersGUIs.Length; i++)
-//            playersGUIs[i].DoTakeCard(c);
-//    }
-//}

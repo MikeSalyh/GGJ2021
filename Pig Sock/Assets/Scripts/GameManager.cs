@@ -58,14 +58,13 @@ public class GameManager : MonoBehaviour
 
     protected void NewGame()
     {
+        CurrentState = GameState.Playing;
         players = new Player[numPlayers];
         for (int i = 0; i < players.Length; i++)
         {
             players[i] = new Player();
             players[i].Init();
-            players[i].OnBust += EndRound;
-            players[i].OnTake += EndRound;
-            players[i].OnJackpot += EndRound;
+            players[i].OnEndTurn += TryEndRound;
         }
         
         GenerateFullDeck();
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
         get
         {
             for (int i = 0; i < players.Length; i++) {
-                if(players[i].currentState != Player.PlayerState.Bust &&  players[i].currentState != Player.PlayerState.Take)
+                if(players[i].currentState != Player.PlayerState.Waiting)
                     return false;
             }
             return true;
@@ -90,6 +89,7 @@ public class GameManager : MonoBehaviour
 
     public void StartNewRound()
     {
+        Debug.Log("Starting new round");
         currentRoundIndex++;
         for(int i = 0; i < players.Length; i++)
             players[i].GenerateNewHand();
@@ -103,18 +103,22 @@ public class GameManager : MonoBehaviour
         //This may become a coroutine after animation is added
         for (int i = 0; i < players.Length; i++)
             players[i].currentState = Player.PlayerState.PlayerTurn;
+
         CurrentState = GameState.Playing;
     }
 
-    protected void EndRound(Card c = null)
+    protected void TryEndRound()
     {
-        CurrentState = GameState.RoundOver;
-        if (OnRoundOver != null)
-            OnRoundOver.Invoke();
-
-        if (currentRoundIndex + 1 >= maxRounds)
+        if (AllActionsDone)
         {
-            DoGameOver();
+            CurrentState = GameState.RoundOver;
+            if (OnRoundOver != null)
+                OnRoundOver.Invoke();
+
+            if (currentRoundIndex + 1 >= maxRounds)
+            {
+                DoGameOver();
+            }
         }
     }
 
