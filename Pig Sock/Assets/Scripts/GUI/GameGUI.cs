@@ -14,7 +14,7 @@ public class GameGUI : MonoBehaviour
     private Card previousCard;
 
     public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
-    public SuitGraphic luckySuit;
+    public CardVisualization luckySuit;
     public Button sockMe, takeCard;
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup gameArea;
@@ -39,6 +39,7 @@ public class GameGUI : MonoBehaviour
         GameManager.instance.OnGameOver += HandleGameOver;
         GameManager.instance.OnStartTurn += HandleStartTurn;
         GameManager.instance.OnEndTurn += HandleEndTurn;
+        GameManager.instance.OnChangeLuckySuit += HandleChangeLuckySuit;
         sockMe.onClick.AddListener(ClickSockMe);
         takeCard.onClick.AddListener(ClickTakeCard);
     }
@@ -58,7 +59,12 @@ public class GameGUI : MonoBehaviour
         }
         card.SetFaceDown();
         peekCard.gameObject.SetActive(false);
-    }    
+    }
+
+    void HandleChangeLuckySuit()
+    {
+        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
+    }
 
     void HandleRoundOver()
     {
@@ -66,7 +72,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleNewRound()
     {
-        luckySuit.SetSuit(GameManager.instance.luckySuit);
+        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
         multiplierText.text = (GameManager.instance.matchMultiplier.ToString() + "x") + " points if matching";
     }
 

@@ -144,9 +144,6 @@ public class Player
         if (OnSock != null)
             OnSock.Invoke(CurrentCard);
 
-
-        Debug.Log(DeckSize);
-
         if (CurrentCard.type == Card.CardType.Joker)
         {
             Bust();
@@ -171,9 +168,15 @@ public class Player
 
     public void TakeCard()
     {
+        Card takenCard = CurrentCard;
         currentState = PlayerState.Take;
         if (OnTake != null)
             OnTake.Invoke(CurrentCard);
+
+        if (GameManager.instance.luckySuit == takenCard.suit && takenCard.type == Card.CardType.Normal)
+        {
+            GameManager.instance.ChangeLuckySuit();
+        }
     }
 
     protected void Bust()

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     public GameAction OnGameOver;
     public GameAction OnNewRound;
     public GameAction OnRoundOver;
+    public GameAction OnChangeLuckySuit;
 
     public delegate void PlayerAction(Player p);
     public PlayerAction OnStartTurn;
@@ -101,8 +102,6 @@ public class GameManager : MonoBehaviour
 
     protected void NewGame()
     {
-        
-
         for (int i = 0; i < players.Length; i++)
         {
             players[i].Init();
@@ -117,7 +116,17 @@ public class GameManager : MonoBehaviour
             OnNewGame.Invoke();
 
         OnRoundOver += StartNewRound;
+        ChangeLuckySuit();
         StartNewRound();
+    }
+
+    public void ChangeLuckySuit()
+    {
+        //WIP - should it always be different?
+        Debug.Log("Changing lucky suit");
+        luckySuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length); //randomize the lucky suit.
+        if (OnChangeLuckySuit != null)
+            OnChangeLuckySuit.Invoke();
     }
 
     public bool AllActionsDone
@@ -142,8 +151,6 @@ public class GameManager : MonoBehaviour
         currentRoundIndex++;
         for(int i = 0; i < players.Length; i++)
             players[i].GenerateNewHand();
-
-        luckySuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length); //randomize the lucky suit.
 
         //This may become a coroutine after animation is added
         if (OnNewRound != null)

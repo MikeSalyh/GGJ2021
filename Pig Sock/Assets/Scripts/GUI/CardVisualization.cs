@@ -17,6 +17,7 @@ public class CardVisualization : MonoBehaviour
     [SerializeField] private Sprite backSprite;
     [SerializeField] private Sprite jokerSprite;
     [SerializeField] private SuitSprites[] sprites;
+    public GameObject specialGraphics;
 
     // Start is called before the first frame update
     void Awake()
