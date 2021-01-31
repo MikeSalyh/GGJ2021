@@ -58,4 +58,28 @@ public class LobbyManager : MonoBehaviour
         MetagameManager.instance.playerData = output.ToArray();
         MetagameManager.instance.GoToGameplay();
     }
+
+
+    //STRETCH GOAL: The ability to tab
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Tab))
+    //    {
+    //        Debug.Log("Tabbin");
+    //        int currentFocus = 0;
+    //        for (int i = 0; i < selectors.Length; i++)
+    //        {
+    //            if (selectors[i].nameInput.isFocused)
+    //            {
+    //                currentFocus = i;
+    //                break;
+    //            }
+    //        }
+    //        currentFocus++;
+    //        if (currentFocus >= selectors.Length)
+    //        {
+    //            currentFocus = 0;
+    //        }
+    //    }
+    //}
 }

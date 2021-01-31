@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
     public int jokersPerDeck = 1;
+    public readonly float gameEndDelay = 0.5f;
 
     
     public enum GameState
@@ -234,6 +235,13 @@ public class GameManager : MonoBehaviour
 
         if (OnGameOver != null)
             OnGameOver.Invoke();
+
+        Invoke("GoToFinale", gameEndDelay);
+    }
+
+    void GoToFinale()
+    {
+        MetagameManager.instance.GoToFinale();
     }
 
     public void QuitToMenu()

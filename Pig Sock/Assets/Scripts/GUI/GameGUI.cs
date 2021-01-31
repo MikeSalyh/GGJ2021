@@ -16,7 +16,8 @@ public class GameGUI : MonoBehaviour
     public SuitGraphic luckySuit;
     public Button sockMe, takeCard;
     public CardVisualization card, peekCard;
-    public GameObject gameArea;
+    public CanvasGroup gameArea;
+    public GameObject tutorial;
 
     private void Awake()
     {
@@ -101,6 +102,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleGameOver()
     {
+        gameArea.gameObject.SetActive(false);
     }
 
     public void ClickSockMe()
@@ -128,7 +130,7 @@ public class GameGUI : MonoBehaviour
     public void HandleTakeCard(Card c)
     {
         peekCard.gameObject.SetActive(false);
-        card.gameObject.SetActive(false);
+        card.ShowBack();
     }
 
     void Update()
@@ -141,6 +143,11 @@ public class GameGUI : MonoBehaviour
             sockMe.interactable = GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn;
             takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.Jackpot || GameManager.instance.activePlayer.currentState == Player.PlayerState.Bust) && GameManager.instance.activePlayer.currentCardIndex >= 0;
         }
+    }
+
+    public void ToggleTutorial()
+    {
+        tutorial.gameObject.SetActive(!tutorial.gameObject.activeSelf);
     }
 
 }

@@ -503,7 +503,7 @@ MonoBehaviour:
   highestScoreGoesFirst: 0
   acesPeek: 0
   numPlayers: 3
-  maxRounds: 2
+  maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
@@ -537,6 +537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 828090989}
   - component: {fileID: 828090990}
+  - component: {fileID: 828090991}
   m_Layer: 5
   m_Name: GameAreaPanel
   m_TagString: Untagged
@@ -576,6 +577,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828090988}
   m_CullTransparentMesh: 0
+--- !u!225 &828090991
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828090988}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &853914748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,6 +1889,146 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694037738}
   m_CullTransparentMesh: 0
+--- !u!1001 &1709496066
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2119510461}
+    m_Modifications:
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808690, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_Name
+      value: (D) HowToPlayPopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569780486808690, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5164569781549918052, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2119510462}
+    - target: {fileID: 5164569781549918052, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleTutorial
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2, type: 3}
+--- !u!224 &1709496067 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5164569780486808685, guid: 6b6f89cb7d5df4d48bcfb61f7522fcb2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1709496066}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1976280479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2192,6 +2345,7 @@ RectTransform:
   - {fileID: 140485377}
   - {fileID: 828090989}
   - {fileID: 179146674}
+  - {fileID: 1709496067}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2225,7 +2379,8 @@ MonoBehaviour:
   takeCard: {fileID: 853914750}
   card: {fileID: 2261152837833842098}
   peekCard: {fileID: 1274312774}
-  gameArea: {fileID: 828090988}
+  gameArea: {fileID: 828090991}
+  tutorial: {fileID: 0}
 --- !u!1001 &2261152837833842097
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2419,7 +2574,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5958157755647163266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2119510462}
+        m_MethodName: ToggleTutorial
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5958157755647163266
 MonoBehaviour:
   m_ObjectHideFlags: 0
