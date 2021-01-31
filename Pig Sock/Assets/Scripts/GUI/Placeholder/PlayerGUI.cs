@@ -16,7 +16,7 @@ public class PlayerGUI : MonoBehaviour
         this.playerRef = playerRef;
         hitMe.onClick.AddListener(playerRef.SockMe);
         take.onClick.AddListener(playerRef.TakeCard);
-        playerRef.OnSock += DoUpdateCard;
+        playerRef.OnSock += DoSockMe;
         playerRef.OnTake += DoTakeCard;
         playerRef.OnPeek += DoPeek;
         playerRef.OnEndTurn += UpdateScoreList;
@@ -24,7 +24,7 @@ public class PlayerGUI : MonoBehaviour
 
     public void DoNewGameGraphics()
     {
-        card.ShowBack();
+        card.SetFaceDown();
         collectionValue.text = "Take ";
         UpdateScoreList();
         nextCard.gameObject.SetActive(false);
@@ -35,7 +35,7 @@ public class PlayerGUI : MonoBehaviour
         nextCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
         UpdateScoreList();
-        card.ShowBack();
+        card.SetFaceDown();
         collectionValue.text = "Take ";
     }
 
@@ -62,9 +62,9 @@ public class PlayerGUI : MonoBehaviour
         }
     }
 
-    public void DoUpdateCard(Card c)
+    public void DoSockMe(Card c)
     {
-        card.SetToCard(c);
+        card.flipCard(c);
         collectionValue.text = "Take Card   " + string.Format("(+{0})", playerRef.CurrentPot);
         discardAction.text = "Sock Me";
         nextCard.gameObject.SetActive(false);

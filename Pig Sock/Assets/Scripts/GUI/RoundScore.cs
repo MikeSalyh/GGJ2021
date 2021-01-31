@@ -26,7 +26,7 @@ public class RoundScore : MonoBehaviour
 
     public void ClearCard()
     {
-        primaryCard.ShowBack();
+        primaryCard.SetFaceDown();
         secondaryCard.gameObject.SetActive(false);
     }
 }
