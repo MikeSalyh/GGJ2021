@@ -47,9 +47,9 @@ public class AudioManager : MonoBehaviour
         if (sounds != null && sounds.Length > 0)
         {
             AudioClip randClip = sounds[Random.Range(0, sounds.Length)];
-            sfxSrc.PlayOneShot(randClip);
-            Debug.Log("Playing sound " + sounds.ToString());
-            return true;
+            if(randClip != null)
+                sfxSrc.PlayOneShot(randClip);
+            return randClip != null;
         }
         else
         {
