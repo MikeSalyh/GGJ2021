@@ -717,8 +717,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuffleMode: 2
   useAddativeValues: 0
-  highestScoreGoesFirst: 1
-  numPlayers: 3
+  highestScoreGoesFirst: 0
+  numPlayers: 1
   maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13

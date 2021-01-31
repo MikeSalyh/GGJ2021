@@ -89,6 +89,7 @@ public class GameManager : MonoBehaviour
         if (OnNewGame != null)
             OnNewGame.Invoke();
 
+        OnRoundOver += StartNewRound;
         StartNewRound();
     }
 
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
             if (OnRoundOver != null)
                 OnRoundOver.Invoke();
 
-            if (currentRoundIndex + 1 >= maxRounds)
+            if (currentRoundIndex >= maxRounds)
             {
                 DoGameOver();
             }
@@ -186,6 +187,7 @@ public class GameManager : MonoBehaviour
     
     protected void DoGameOver()
     {
+        Debug.Log("The game is over!");
         CurrentState = GameState.GameOver;
         if (OnGameOver != null)
             OnGameOver.Invoke();
