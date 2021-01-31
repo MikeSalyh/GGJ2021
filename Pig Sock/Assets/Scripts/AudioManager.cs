@@ -12,6 +12,8 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     public AudioClip music1;
+    [Range(0,1)]
+    public float musicVolume = 0.5f;
 
     [Header("SFX")]
     public AudioClip[] sockMeBtn;
@@ -58,6 +60,8 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(AudioClip clip)
     {
         //WIP - doesn't have xfading
+
+        musicSrc.volume = musicVolume;
         if (clip != null && musicSrc.clip != clip)
         {
             musicSrc.clip = clip;
