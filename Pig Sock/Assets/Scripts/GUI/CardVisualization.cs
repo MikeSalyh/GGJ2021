@@ -51,6 +51,7 @@ public class CardVisualization : MonoBehaviour
     public void CollectAs(Card c, Transform refTransform, Transform targetTransform, float time = 0.75f)
     {
         gameObject.SetActive(true);
+        StopAllCoroutines();
         StartCoroutine(cCollectAs(c, refTransform, targetTransform, time));
     }
     IEnumerator cCollectAs(Card c, Transform refTransform, Transform targetTransform, float time)
@@ -59,6 +60,7 @@ public class CardVisualization : MonoBehaviour
         transform.localEulerAngles = Vector3.zero;
         transform.localScale = Vector3.one;
         transform.position = refTransform.position;
+        transform.DOKill();
         transform.DOLocalMoveZ(-100, time / 2f).SetEase(Ease.OutBack);
         transform.DOLocalRotate(new Vector3(-3f, 0f, 0f), time / 2f).SetEase(Ease.OutBack);
 
@@ -74,6 +76,7 @@ public class CardVisualization : MonoBehaviour
     public void FallDown(Card c, Transform refTransform, float time = 0.35f)
     {
         gameObject.SetActive(true);
+        StopAllCoroutines();
         StartCoroutine(cFall(c, refTransform, time));
     }
 

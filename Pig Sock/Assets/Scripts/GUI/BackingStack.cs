@@ -22,9 +22,12 @@ public class BackingStack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < backings.Length; i++)
+        if (GameManager.instance.activePlayer != null && GameManager.instance.activePlayer.currentState != Player.PlayerState.Done)
         {
-            backings[backings.Length - i - 1].gameObject.SetActive(GameManager.instance.activePlayer.DeckSize - 1> i);
+            for (int i = 0; i < backings.Length; i++)
+            {
+                backings[backings.Length - i - 1].gameObject.SetActive(GameManager.instance.activePlayer.DeckSize - 1 > i);
+            }
         }
     }
 }
