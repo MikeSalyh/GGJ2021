@@ -109,7 +109,14 @@ public class AIAdvisor : MonoBehaviour
         }
         else if (GameManager.instance.currentRoundIndex  + 1 >= GameManager.instance.maxRounds)
         {
-            recommendation = GameManager.instance.activePlayer.CurrentPot >= scoreDelta ? Recommendation.Take : Recommendation.SockMe;
+            //Calculate the move needed to win:
+            int winningScore = 0;
+            for (int i = 0; i < GameManager.instance.players.Length; i++)
+            {
+                if (GameManager.instance.players[i].Score > winningScore)
+                    winningScore = i;
+            }
+            recommendation = (GameManager.instance.activePlayer.CurrentPot + GameManager.instance.activePlayer.Score > winningScore && GameManager.instance.activePlayer.CurrentPot >= goodDeal) ? Recommendation.Take : Recommendation.SockMe;
         }
         else
         {

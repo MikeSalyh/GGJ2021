@@ -20,6 +20,7 @@ public class GameGUI : MonoBehaviour
     public CanvasGroup cardDeckArea, controlsArea;
     public GameObject tutorial;
     public Transform cardCenter;
+    public AIAdvisor ai;
 
     private void Awake()
     {
@@ -102,7 +103,11 @@ public class GameGUI : MonoBehaviour
         controlsArea.DOKill();
         controlsArea.alpha = 0f;
         controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
+        controlsArea.interactable = GameManager.instance.activePlayer.data.type == PlayerData.Type.Human;
         AudioManager.instance.Play(AudioManager.instance.deckEnter);
+
+        if (GameManager.instance.activePlayer.data.type == PlayerData.Type.CPU)
+            StartCoroutine(BotTakeAction());
     }
 
     void HandleEndTurn(Player p)
@@ -214,6 +219,39 @@ public class GameGUI : MonoBehaviour
         peekCard.gameObject.SetActive(false);
         previousCard = c;
     }
+
+
+    IEnumerator BotTakeAction()
+    {
+        yield return new WaitForSeconds(0.5f);
+        while (true)
+        {
+            if (GameManager.instance.activePlayer.data.type != PlayerData.Type.CPU)
+            {
+                yield break;
+            }
+            else
+            {
+
+                if (ai.recommendation == AIAdvisor.Recommendation.Take)
+                {
+                    if (GameManager.instance.activePlayer.CurrentCard.type == Card.CardType.Joker)
+                        yield return new WaitForSeconds(1.5f);
+                    else
+                        yield return new WaitForSeconds(0.75f);
+
+                    takeCard.onClick.Invoke();
+                    yield break;
+                }
+                else
+                {
+                    yield return new WaitForSeconds(Random.Range(0.2f, 0.35f));
+                    sockMe.onClick.Invoke();
+                }
+            }
+        }
+    }
+
 
     void Update()
     {

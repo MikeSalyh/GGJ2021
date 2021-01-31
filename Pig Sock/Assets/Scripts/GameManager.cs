@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < players.Length; i++)
             {
                 players[i] = new Player();
+                players[i].data.type = (i == 0 ? PlayerData.Type.Human : PlayerData.Type.CPU);
                 dataToMetagame[i] = players[i].data;
             }
             MetagameManager.instance.playerData = dataToMetagame;

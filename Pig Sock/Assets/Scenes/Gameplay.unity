@@ -957,6 +957,7 @@ MonoBehaviour:
   nextCardEV: 0
   bustingRisk: 0
   scoreDelta: 0
+  goodDeal: 0
   mood: 0
   recommendation: 0
 --- !u!1 &828090988
@@ -3228,6 +3229,7 @@ MonoBehaviour:
   controlsArea: {fileID: 2078211617}
   tutorial: {fileID: 887874869}
   cardCenter: {fileID: 887127332}
+  ai: {fileID: 804219157}
 --- !u!224 &1703695462911492535
 RectTransform:
   m_ObjectHideFlags: 0
