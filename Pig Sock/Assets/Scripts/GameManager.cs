@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
     private Queue<Player> activePlayers;
     public Player activePlayer;
 
+    private float requestedDelay;
+
     private void Awake()
     {
         instance = this;
@@ -154,23 +156,36 @@ public class GameManager : MonoBehaviour
         CurrentState = GameState.Playing;
     }
 
+    public void RequestDelay(float seconds)
+    {
+        requestedDelay = seconds;
+    }
+
     private void Update()
     {
         if (CurrentState == GameState.Playing)
         {
-            if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Waiting)
+            if (requestedDelay > 0f)
             {
-                activePlayer = activePlayers.Peek();
-                activePlayer.currentState = Player.PlayerState.PlayerTurn;
-                if (OnStartTurn != null)
-                    OnStartTurn.Invoke(activePlayer);
+                requestedDelay -= Time.deltaTime;
             }
-            else if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Done)
+            else
             {
-                activePlayers.Dequeue();
-                if (OnEndTurn != null)
-                    OnEndTurn.Invoke(activePlayer);
-                activePlayer = null;
+                if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Waiting)
+                {
+                    activePlayer = activePlayers.Peek();
+                    activePlayer.currentState = Player.PlayerState.PlayerTurn;
+                    if (OnStartTurn != null)
+                        OnStartTurn.Invoke(activePlayer);
+                    activePlayer.SockMe();
+                }
+                else if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Done)
+                {
+                    activePlayers.Dequeue();
+                    if (OnEndTurn != null)
+                        OnEndTurn.Invoke(activePlayer);
+                    activePlayer = null;
+                }
             }
         }
     }

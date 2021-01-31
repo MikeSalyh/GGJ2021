@@ -16,7 +16,7 @@ public class GameGUI : MonoBehaviour
     public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
     public SuitGraphic luckySuit;
     public Button sockMe, takeCard;
-    public CardVisualization card, peekCard, specialPurposeCard;
+    public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup gameArea;
     public GameObject tutorial;
 
@@ -58,24 +58,7 @@ public class GameGUI : MonoBehaviour
         }
         card.SetFaceDown();
         peekCard.gameObject.SetActive(false);
-    }
-
-    public void DoSockMe(Card c)
-    {
-        if (!card.IsFaceDown)
-        {
-            specialPurposeCard.FallDown(previousCard, card.transform);
-            card.SetToCard(c);
-        }
-        else
-        {
-            card.flipCard(c);
-        }
-        string takePhrase = GameManager.instance.activePlayer.CurrentCard.suit == GameManager.instance.luckySuit ? "Pair " : "";
-        takeCardText.text = string.Format("Take {0}(+{1})", takePhrase, GameManager.instance.activePlayer.CurrentPot);
-        peekCard.gameObject.SetActive(false);
-        previousCard = c;
-    }
+    }    
 
     void HandleRoundOver()
     {
@@ -95,7 +78,7 @@ public class GameGUI : MonoBehaviour
         card.SetFaceDown();
         takeCardText.text = "Take";
         sockMeText.text = "Sock Me";
-        GameManager.instance.activePlayer.OnSock += DoSockMe;
+        GameManager.instance.activePlayer.OnSock += HandleSockMe;
         GameManager.instance.activePlayer.OnTake += HandleTakeCard;
         GameManager.instance.activePlayer.OnPeek += HandlePeek;
         GameManager.instance.activePlayer.OnBust += HandleBust;
@@ -104,7 +87,7 @@ public class GameGUI : MonoBehaviour
     void HandleEndTurn(Player p)
     {
         playersNameText.text = "";
-        GameManager.instance.activePlayer.OnSock -= DoSockMe;
+        GameManager.instance.activePlayer.OnSock -= HandleSockMe;
         GameManager.instance.activePlayer.OnTake -= HandleTakeCard;
         GameManager.instance.activePlayer.OnPeek -= HandlePeek;
         GameManager.instance.activePlayer.OnBust -= HandleBust;
@@ -127,7 +110,7 @@ public class GameGUI : MonoBehaviour
     void HandleBust(Card c)
     {
         sockMeText.text = "Bust!";
-        takeCardText.text = "Pass Turn";
+        takeCardText.text = "Take (+0)";
         card.transform.DOShakePosition(1f, 5f);
     }
 
@@ -141,6 +124,34 @@ public class GameGUI : MonoBehaviour
     {
         peekCard.gameObject.SetActive(false);
         card.SetFaceDown();
+        GameManager.instance.RequestDelay(1.5f);
+        PlayerScoreCard destination = null;
+        for (int i = 0; i < scoreCards.Length; i++)
+        {
+            if (scoreCards[i].playerRef == GameManager.instance.activePlayer)
+            {
+                destination = scoreCards[i];
+                break;
+            }
+        }
+        specialPurposeCard.CollectAs(c, card.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
+    }
+
+    public void HandleSockMe(Card c)
+    {
+        if (!card.IsFaceDown)
+        {
+            specialPurposeCard.FallDown(previousCard, card.transform);
+            card.SetToCard(c);
+        }
+        else
+        {
+            card.flipCard(c);
+        }
+        string takePhrase = GameManager.instance.activePlayer.CurrentCard.suit == GameManager.instance.luckySuit ? "Pair " : "";
+        takeCardText.text = string.Format("Take {0}(+{1})", takePhrase, GameManager.instance.activePlayer.CurrentPot);
+        peekCard.gameObject.SetActive(false);
+        previousCard = c;
     }
 
     void Update()

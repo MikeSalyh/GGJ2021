@@ -30,20 +30,46 @@ public class CardVisualization : MonoBehaviour
         else image.sprite = GetSprite(c);
     }
 
-    public void flipCard(Card c, float time = 0.5f)
+    public void flipCard(Card c, float time = 0.35f)
     {
         StartCoroutine(cFlipCard(c, time));
     }
     IEnumerator cFlipCard(Card c, float time)
     {
         SetFaceDown();
+        transform.localScale = Vector3.one;
         transform.eulerAngles = Vector3.zero;
-        transform.DOLocalRotate(new Vector3(0, 90f, 0), time / 2);
+        transform.DOLocalRotate(new Vector3(0, -90f, 0), time / 2);
+        transform.DOLocalMoveZ(5f, time / 2f);
         yield return new WaitForSeconds(time / 2);
-        transform.eulerAngles = new Vector3(0, -90f, 0);
+        transform.eulerAngles = new Vector3(0, 90f, 0);
+        transform.DOLocalMoveZ(-5f, time / 2f);
         SetToCard(c);
         transform.DOLocalRotate(Vector3.zero, time / 2);
     }
+
+    public void CollectAs(Card c, Transform refTransform, Transform targetTransform, float time = 0.75f)
+    {
+        gameObject.SetActive(true);
+        StartCoroutine(cCollectAs(c, refTransform, targetTransform, time));
+    }
+    IEnumerator cCollectAs(Card c, Transform refTransform, Transform targetTransform, float time)
+    {
+        SetToCard(c);
+        transform.localEulerAngles = Vector3.zero;
+        transform.localScale = Vector3.one;
+        transform.position = refTransform.position;
+        transform.DOLocalMoveZ(-100, time / 2f).SetEase(Ease.OutBack);
+        transform.DOLocalRotate(new Vector3(-3f, 0f, 0f), time / 2f).SetEase(Ease.OutBack);
+
+        yield return new WaitForSeconds(time / 2f);
+        transform.DOMove(targetTransform.position, time / 2f).SetEase(Ease.InSine);
+        transform.DOScale(Vector3.one * 0.05f, time/2f).SetEase(Ease.InQuad);
+
+        yield return new WaitForSeconds(time / 2f);
+        gameObject.SetActive(false);
+    }
+
 
     public void FallDown(Card c, Transform refTransform, float time = 0.35f)
     {
@@ -53,6 +79,7 @@ public class CardVisualization : MonoBehaviour
 
     IEnumerator cFall(Card c, Transform refTransform, float time)
     {
+        transform.localScale = Vector3.one;
         transform.localEulerAngles = Vector3.zero;
         transform.position = refTransform.position;
         SetToCard(c);

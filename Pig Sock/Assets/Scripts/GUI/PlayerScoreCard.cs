@@ -13,7 +13,7 @@ public class PlayerScoreCard : MonoBehaviour
 
     public Transform cardHolder;
     public RoundScore[] rounds;
-    private Player playerRef;
+    [HideInInspector] public Player playerRef;
 
     public void SetUp(Player p)
     {
