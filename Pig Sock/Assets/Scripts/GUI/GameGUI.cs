@@ -172,7 +172,7 @@ public class GameGUI : MonoBehaviour
             specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[bestRound].transform);
         }
 
-        GameManager.instance.RequestDelay(1.51f);
+        GameManager.instance.RequestDelay(1.6f);
         yield return new WaitForSeconds(1f);
 
         //Fading
