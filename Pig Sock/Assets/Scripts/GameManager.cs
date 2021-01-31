@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     public bool acesPeek = true;
 
     [Header("Variables")]
-    public int numPlayers = 1;
+    public int numPlayers = 2;
     public int maxRounds = 5;
     public int cardsPerDeck = 13;
     public int numCardsPerSuit = 13;

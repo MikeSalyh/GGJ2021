@@ -288,7 +288,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &179146673
 GameObject:
@@ -915,7 +915,7 @@ MonoBehaviour:
   useAddativeValues: 0
   highestScoreGoesFirst: 0
   acesPeek: 1
-  numPlayers: 1
+  numPlayers: 2
   maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13
@@ -939,7 +939,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &804219157
 MonoBehaviour:
@@ -953,7 +953,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8359e84a554bd945b537afac3f67238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextCardRisk: 0
+  averageTurnValue: 0
+  nextCardEV: 0
+  bustingRisk: 0
+  scoreDelta: 0
+  mood: 0
+  recommendation: 0
 --- !u!1 &828090988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3184,7 +3189,7 @@ RectTransform:
   - {fileID: 1219967733}
   - {fileID: 1709496067}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

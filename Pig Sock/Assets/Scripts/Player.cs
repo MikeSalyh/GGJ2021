@@ -21,7 +21,7 @@ public class CollectedCard
     {
         get
         {
-            if (card == null)
+            if (!Played)
                 return 0;
             if (wasMatch)
             {
@@ -29,6 +29,14 @@ public class CollectedCard
             } else{
                 return card.value;
             }
+        }
+    }
+
+    public bool Played
+    {
+        get
+        {
+            return card != null;
         }
     }
 }
@@ -56,6 +64,7 @@ public class Player
             return output;
         }
     }
+
     public delegate void CardAction(Card c);
     public CardAction OnBust;
     public CardAction OnSock;
