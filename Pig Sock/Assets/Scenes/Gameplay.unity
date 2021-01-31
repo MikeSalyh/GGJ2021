@@ -782,7 +782,7 @@ MonoBehaviour:
   highestScoreGoesFirst: 0
   acesPeek: 1
   numPlayers: 1
-  maxRounds: 2
+  maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
