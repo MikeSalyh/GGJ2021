@@ -17,7 +17,7 @@ public class GameGUI : MonoBehaviour
     public CardVisualization luckySuit, specialPurposeLucky;
     public Button sockMe, takeCard;
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
-    public CanvasGroup gameArea;
+    public CanvasGroup cardDeckArea, controlsArea;
     public GameObject tutorial;
 
     private void Awake()
@@ -57,7 +57,7 @@ public class GameGUI : MonoBehaviour
         {
             scoreCards[i].SetUp(GameManager.instance.players[i]);
         }
-        card.SetFaceDown();
+        //card.SetFaceDown();
         peekCard.gameObject.SetActive(false);
         //luckySuit.SetFaceDown();
         luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
@@ -79,8 +79,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleStartTurn(Player p)
     {
-        //gameArea.transform.localPosition = new Vector3(1240f, 0f, 0f);
-        //gameArea.transform.DOLocalMoveX(480f, 0.75f);
+        
         playersNameText.text = p.data.name + "'s Turn";
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
@@ -91,6 +90,13 @@ public class GameGUI : MonoBehaviour
         GameManager.instance.activePlayer.OnTake += HandleTakeCard;
         GameManager.instance.activePlayer.OnPeek += HandlePeek;
         GameManager.instance.activePlayer.OnBust += HandleBust;
+
+        //Fading & animating in
+        cardDeckArea.transform.localPosition = new Vector3(-380, -560f, 0f); //I don't understand this offset. Worrying.
+        cardDeckArea.transform.DOLocalMoveY(100, 0.5f).SetEase(Ease.OutExpo);
+        playersNameText.DOFade(1f, 0.25f);
+        controlsArea.alpha = 0f;
+        controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
     }
 
     void HandleEndTurn(Player p)
@@ -104,7 +110,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleGameOver()
     {
-        gameArea.gameObject.SetActive(false);
+        cardDeckArea.gameObject.SetActive(false);
     }
 
     public void ClickSockMe()
@@ -131,13 +137,18 @@ public class GameGUI : MonoBehaviour
 
     public void HandleTakeCard(Card c)
     {
+        StartCoroutine(CTakeCard(c));
+    }
+
+    private IEnumerator CTakeCard(Card c){
         peekCard.gameObject.SetActive(false);
+        controlsArea.DOFade(0f, 0.25f);
+        playersNameText.DOFade(0f, 0.25f);
         if (GameManager.instance.activePlayer.DeckSize > 1)
             card.SetFaceDown();
         else
             card.gameObject.SetActive(false);
 
-        GameManager.instance.RequestDelay(1.5f);
         PlayerScoreCard destination = null;
         for (int i = 0; i < scoreCards.Length; i++)
         {
@@ -151,9 +162,14 @@ public class GameGUI : MonoBehaviour
 
         if (c.suit == GameManager.instance.luckySuit && c.type == Card.CardType.Normal)
         {
-            //luckySuit.SetFaceDown();
             specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
         }
+
+        GameManager.instance.RequestDelay(1.51f);
+        yield return new WaitForSeconds(1f);
+
+        //Fading
+        cardDeckArea.transform.DOLocalMoveY(570f, 0.5f).SetEase(Ease.InExpo);
     }
 
     public void HandleSockMe(Card c)
@@ -165,7 +181,7 @@ public class GameGUI : MonoBehaviour
         }
         else
         {
-            card.flipCard(c);
+            card.SetToCard(c);
         }
         string takePhrase = GameManager.instance.activePlayer.CurrentCard.suit == GameManager.instance.luckySuit ? "Pair " : "";
         takeCardText.text = string.Format("Take {0}(+{1})", takePhrase, GameManager.instance.activePlayer.CurrentPot);

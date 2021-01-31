@@ -29,8 +29,10 @@ public class CardVisualization : MonoBehaviour
 
     public void SetToCard(Card c)
     {
-        if (c == null) SetFaceDown();
-        else image.sprite = GetSprite(c);
+        if (c == null)
+            SetFaceDown();
+        else
+            GetComponent<Image>().sprite = GetSprite(c);
     }
 
     public void flipCard(Card c, bool showSpecialGraphicsAfterFlip = false, float time = 0.35f)
