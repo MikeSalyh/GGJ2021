@@ -32,10 +32,13 @@ public class MetagameManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             if (dimPlane.alpha > 0f)
                 dimPlane.alpha = 0f;
+
+            AudioManager.instance.PlayMusic(AudioManager.instance.music1); //WIP, if 2 songs
         }
         else
         {
             Destroy(this.gameObject);
+            return;
         }
     }
 

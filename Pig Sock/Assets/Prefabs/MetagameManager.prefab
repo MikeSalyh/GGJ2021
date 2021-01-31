@@ -48,7 +48,6 @@ MonoBehaviour:
   sfxSrc: {fileID: 688947233069506059}
   musicSrc: {fileID: 6500499930070184551}
   music1: {fileID: 0}
-  music2: {fileID: 0}
   sockMeBtn:
   - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
   takeSock:
@@ -69,6 +68,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
   deckEnter:
   - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
+  isMuted: 0
 --- !u!82 &688947233069506059
 AudioSource:
   m_ObjectHideFlags: 0

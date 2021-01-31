@@ -12,7 +12,6 @@ public class AudioManager : MonoBehaviour
 
     [Header("Music")]
     public AudioClip music1;
-    public AudioClip music2;
 
     [Header("SFX")]
     public AudioClip[] sockMeBtn;
@@ -25,7 +24,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] jackpot;
     public AudioClip[] deckExit, deckEnter;
 
-    public bool isMuted;
+    [HideInInspector] public bool isMuted;
     public void ToggleMute()
     {
         isMuted = !isMuted;
@@ -53,6 +52,16 @@ public class AudioManager : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    public void PlayMusic(AudioClip clip)
+    {
+        //WIP - doesn't have xfading
+        if (clip != null && musicSrc.clip != clip)
+        {
+            musicSrc.clip = clip;
+            musicSrc.Play();
         }
     }
 }
