@@ -34,7 +34,7 @@ public class AIPlayer : MonoBehaviour
     }
 
     void CrunchData(Card c = null) {
-        nextCardEV = CalculateNextCardExpectedValue();
+        nextCardEV = CalculateNextCardExpectedValue(c);
     }
 
     public int CalculateTotalValue(Player p)
@@ -53,15 +53,27 @@ public class AIPlayer : MonoBehaviour
         return value; // set the average turn value here.
     }
 
-    public float CalculateNextCardExpectedValue()
+    public float CalculateNextCardExpectedValue(Card currentCard)
     {
         float value = averageTurnValue;
 
         //factor in busting risk.
-        //WIP - Peeking logic would go here to set busting risk to either 0 or 1.
         int jokers = GameManager.instance.jokersPerDeck;
 
-        bustingRisk = (float)jokers / ((float)GameManager.instance.activePlayer.DeckSize - 1);
+        if (!GameManager.instance.activePlayer.HasNextCard)
+        {
+            bustingRisk = 1;
+            return 0;
+        }else if (GameManager.instance.acesPeek && currentCard.value == 1)
+        {
+            //Aces peek
+            bustingRisk = GameManager.instance.activePlayer.NextCard.type == Card.CardType.Joker ? 1 : 0;
+            return GameManager.instance.activePlayer.NextCard.value; 
+        }
+        else
+        {
+            bustingRisk = (float)jokers / ((float)GameManager.instance.activePlayer.DeckSize - 1);
+        }
         return value * (1f-bustingRisk);
     }
 }

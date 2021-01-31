@@ -59,7 +59,7 @@ public class GameGUI : MonoBehaviour
             scoreCards[i].SetUp(GameManager.instance.players[i]);
         }
         //card.SetFaceDown();
-        peekCard.gameObject.SetActive(false);
+        //peekCard.gameObject.SetActive(false);
         //luckySuit.SetFaceDown();
         luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));        
     }
