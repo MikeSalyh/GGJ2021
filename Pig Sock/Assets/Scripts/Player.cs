@@ -7,9 +7,21 @@ using UnityEngine;
 [System.Serializable]
 public class Player
 {
+    public string myName = "Name";
     public List<Card> myHand;
     public int currentCardIndex = -1;
     public int[] roundScores;
+
+    public int Score
+    {
+        get
+        {
+            int output = 0;
+            for (int i = 0; i < roundScores.Length; i++)
+                output += roundScores[i] > 0 ? roundScores[i] : 0;
+            return output;
+        }
+    }
     public delegate void CardAction(Card c);
     public CardAction OnBust;
     public CardAction OnHit;
