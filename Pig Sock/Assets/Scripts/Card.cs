@@ -20,8 +20,7 @@ public class Card
     public enum CardType
     {
         Normal,
-        Joker,
-        Peek
+        Joker
     }
 
     public Card(Suit suit, int value)
@@ -35,9 +34,6 @@ public class Card
         switch (type) {
             case CardType.Joker:
                 this.type = CardType.Joker;
-                break;
-            case CardType.Peek:
-                this.type = CardType.Peek;
                 break;
             case CardType.Normal:
                 throw new System.Exception("Cannot construct normal cards this way");

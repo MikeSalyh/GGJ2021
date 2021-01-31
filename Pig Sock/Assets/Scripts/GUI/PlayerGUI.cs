@@ -7,7 +7,7 @@ using TMPro;
 public class PlayerGUI : MonoBehaviour
 {
     [HideInInspector] public Player playerRef;
-    public Button hitMe, take, peek;
+    public Button hitMe, take;
     public TextMeshProUGUI scoreList, collectionValue, discardAction;
     public CardVisualization card, nextCard;
 
@@ -16,7 +16,6 @@ public class PlayerGUI : MonoBehaviour
         this.playerRef = playerRef;
         hitMe.onClick.AddListener(playerRef.HitMe);
         take.onClick.AddListener(playerRef.TakeCard);
-        peek.onClick.AddListener(playerRef.Peek);
         playerRef.OnHit += DoUpdateCard;
         playerRef.OnTake += DoTakeCard;
         playerRef.OnPeek += DoPeek;
@@ -67,14 +66,7 @@ public class PlayerGUI : MonoBehaviour
     {
         card.SetToCard(c);
         collectionValue.text = "Take Card   " + string.Format("(+{0})", playerRef.CurrentPot);
-        if (c.type == Card.CardType.Peek)
-        {
-            discardAction.text = "Collect";
-        }
-        else
-        {
-            discardAction.text = "Discard";
-        }
+        discardAction.text = "Sock Me";
         nextCard.gameObject.SetActive(false);
     }
 
@@ -95,7 +87,6 @@ public class PlayerGUI : MonoBehaviour
     void Update()
     {
         hitMe.interactable = playerRef.currentState == Player.PlayerState.PlayerTurn;
-        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.Jackpot) && playerRef.currentCardIndex >= 0 && playerRef.CurrentCard.type != Card.CardType.Peek;
-        peek.interactable = playerRef.currentState == Player.PlayerState.PlayerTurn && playerRef.CanPeek;
+        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.Jackpot) && playerRef.currentCardIndex >= 0;
     }
 }

@@ -17,7 +17,6 @@ public class Player
     public CardAction OnJackpot;
     public CardAction OnPeek;
     public GameManager.GameAction OnEndTurn;
-    public int peeks = 0;
 
     public enum PlayerState
     {
@@ -69,15 +68,6 @@ public class Player
                 randomIndex = myHand.Count;
             myHand.Insert(randomIndex, new Card(Card.CardType.Joker));
         }
-        for (int i = 0; i < GameManager.instance.peeksPerDeck; i++)
-        {
-            Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
-            int randomIndex = UnityEngine.Random.Range(1, myHand.Count);
-
-            if (GameManager.instance.debug__putSpecialsAtEnd)
-                randomIndex = myHand.Count;
-            myHand.Insert(randomIndex, new Card(Card.CardType.Peek));
-        }
     }
 
     public void EndTurn(Card c = null)
@@ -90,9 +80,6 @@ public class Player
 
     public void HitMe()
     {
-        if (currentCardIndex > 0 && CurrentCard.type == Card.CardType.Peek)
-            peeks++;
-
         currentCardIndex++;
         currentState = PlayerState.Reveal; //only matters for future corotuines.
         if (OnHit != null)
@@ -104,6 +91,9 @@ public class Player
         }
         else
         {
+            if (HasNextCard && CurrentCard.value == 1)
+                Peek();
+
             if (currentCardIndex + 1 >= GameManager.instance.cardsPerDeck)
                 currentState = PlayerState.Jackpot;
             else
@@ -111,14 +101,8 @@ public class Player
         }
     }
 
-    public bool CanPeek
-    {
-        get { return peeks > 0 && HasNextCard; }
-    }
-
     public void Peek()
     {
-        peeks--;
         if (OnPeek != null)
             OnPeek.Invoke(NextCard);
     }
@@ -146,7 +130,6 @@ public class Player
 
     public void HandleNewGame()
     {
-        peeks = 0;
         roundScores = new int[GameManager.instance.maxRounds];
         for (int i = 0; i < roundScores.Length; i++)
             roundScores[i] = -1;
