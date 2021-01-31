@@ -123,7 +123,11 @@ public class GameGUI : MonoBehaviour
     public void HandleTakeCard(Card c)
     {
         peekCard.gameObject.SetActive(false);
-        card.SetFaceDown();
+        if (GameManager.instance.activePlayer.DeckSize > 1)
+            card.SetFaceDown();
+        else
+            card.gameObject.SetActive(false);
+
         GameManager.instance.RequestDelay(1.5f);
         PlayerScoreCard destination = null;
         for (int i = 0; i < scoreCards.Length; i++)
@@ -162,7 +166,7 @@ public class GameGUI : MonoBehaviour
         }
         else {
             sockMe.interactable = GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn;
-            takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.Jackpot || GameManager.instance.activePlayer.currentState == Player.PlayerState.Bust) && GameManager.instance.activePlayer.currentCardIndex >= 0;
+            takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.LastCard || GameManager.instance.activePlayer.currentState == Player.PlayerState.Bust) && GameManager.instance.activePlayer.currentCardIndex >= 0;
         }
     }
 

@@ -87,6 +87,6 @@ public class PlayerGUI : MonoBehaviour
     void Update()
     {
         hitMe.interactable = playerRef.currentState == Player.PlayerState.PlayerTurn;
-        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.Jackpot) && playerRef.currentCardIndex >= 0;
+        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.LastCard) && playerRef.currentCardIndex >= 0;
     }
 }

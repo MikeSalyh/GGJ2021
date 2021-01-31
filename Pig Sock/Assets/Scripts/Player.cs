@@ -33,6 +33,7 @@ public class CollectedCard
     }
 }
 
+//[System.Serializable]
 public class Player
 {
     public PlayerData data = new PlayerData();
@@ -65,11 +66,20 @@ public class Player
         Reveal,
         Bust,
         Take,
-        Jackpot,
+        LastCard,
         Done
     }
 
     public PlayerState currentState;
+
+
+    public int DeckSize
+    {
+        get
+        {
+            return myHand.Count - currentCardIndex;
+        }
+    }
 
     public Player()
     {
@@ -134,6 +144,9 @@ public class Player
         if (OnSock != null)
             OnSock.Invoke(CurrentCard);
 
+
+        Debug.Log(DeckSize);
+
         if (CurrentCard.type == Card.CardType.Joker)
         {
             Bust();
@@ -143,8 +156,8 @@ public class Player
             if (HasNextCard && CurrentCard.value == 1 && GameManager.instance.acesPeek)
                 Peek();
 
-            if (currentCardIndex + 1 >= GameManager.instance.cardsPerDeck)
-                currentState = PlayerState.Jackpot;
+            if (DeckSize <= 1)
+                currentState = PlayerState.LastCard;
             else
                 currentState = PlayerState.PlayerTurn;
         }
@@ -172,7 +185,7 @@ public class Player
 
     protected void Jackpot()
     {
-        currentState = PlayerState.Jackpot;
+        currentState = PlayerState.LastCard;
         if (OnJackpot != null)
             OnJackpot.Invoke(CurrentCard);
     }
