@@ -105,7 +105,7 @@ public class MetagameManager : MonoBehaviour
     }
 
 
-    public void SwitchState(GameState value)
+    private void SwitchState(GameState value)
     {
         if (currentState == value)  //If it's already in this state, do nothing.
             return;

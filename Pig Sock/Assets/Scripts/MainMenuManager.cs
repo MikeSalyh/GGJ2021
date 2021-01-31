@@ -23,4 +23,9 @@ public class MainMenuManager : MonoBehaviour
     {
         MetagameManager.instance.GoToLobby();
     }
+
+    public void PlayClick()
+    {
+        AudioManager.instance.Play(AudioManager.instance.generalMenuSelect);
+    }
 }

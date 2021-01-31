@@ -60,7 +60,7 @@ public class GameGUI : MonoBehaviour
         //card.SetFaceDown();
         peekCard.gameObject.SetActive(false);
         //luckySuit.SetFaceDown();
-        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
+        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));        
     }
 
     void HandleChangeLuckySuit()
@@ -79,13 +79,13 @@ public class GameGUI : MonoBehaviour
 
     void HandleStartTurn(Player p)
     {
-        
         playersNameText.text = p.data.name + "'s Turn";
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
         card.SetFaceDown();
         takeCardText.text = "Take";
         sockMeText.text = "Sock Me";
+
         GameManager.instance.activePlayer.OnSock += HandleSockMe;
         GameManager.instance.activePlayer.OnTake += HandleTakeCard;
         GameManager.instance.activePlayer.OnPeek += HandlePeek;
@@ -101,11 +101,13 @@ public class GameGUI : MonoBehaviour
         controlsArea.DOKill();
         controlsArea.alpha = 0f;
         controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
+        AudioManager.instance.Play(AudioManager.instance.deckEnter);
     }
 
     void HandleEndTurn(Player p)
     {
         playersNameText.text = "";
+        Debug.Log(GameManager.instance.activePlayer.ToString());
         GameManager.instance.activePlayer.OnSock -= HandleSockMe;
         GameManager.instance.activePlayer.OnTake -= HandleTakeCard;
         GameManager.instance.activePlayer.OnPeek -= HandlePeek;
@@ -130,13 +132,15 @@ public class GameGUI : MonoBehaviour
     {
         sockMeText.text = "Bust!";
         takeCardText.text = "Take (+0)";
-        card.transform.DOShakePosition(1f, 5f);
+        card.transform.DOShakePosition(1f, 8f);
+        AudioManager.instance.Play(AudioManager.instance.bust);
     }
 
     public void HandlePeek(Card c)
     {
         peekCard.SetToCard(c);
         peekCard.gameObject.SetActive(true);
+        AudioManager.instance.Play(AudioManager.instance.peek);
     }
 
     public void HandleTakeCard(Card c)
@@ -165,11 +169,20 @@ public class GameGUI : MonoBehaviour
             }
         }
 
+        AudioManager.instance.Play(AudioManager.instance.takeSock);
+
         int bestRound = GameManager.instance.currentRoundIndex >= GameManager.instance.maxRounds ? GameManager.instance.maxRounds - 1 : GameManager.instance.currentRoundIndex;
         specialPurposeCard.CollectAs(c, card.transform, destination.rounds[bestRound].transform);
         if (c.suit == GameManager.instance.luckySuit && c.type == Card.CardType.Normal)
         {
             specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[bestRound].transform);
+        }
+
+        int newCardValue = c.suit == GameManager.instance.luckySuit ? c.value * GameManager.instance.matchMultiplier : c.value;
+        if (newCardValue > GameManager.instance.jackpotThreshhold)
+        {
+            //Do jackpot stuff here
+            AudioManager.instance.Play(AudioManager.instance.jackpot);
         }
 
         GameManager.instance.RequestDelay(1.6f);
@@ -178,6 +191,7 @@ public class GameGUI : MonoBehaviour
         //Fading
         cardDeckArea.transform.DOKill();
         cardDeckArea.transform.DOLocalMoveY(570f, 0.5f).SetEase(Ease.InExpo);
+        AudioManager.instance.Play(AudioManager.instance.deckExit);
     }
 
     public void HandleSockMe(Card c)
@@ -186,6 +200,8 @@ public class GameGUI : MonoBehaviour
         {
             specialPurposeCard.FallDown(previousCard, card.transform);
             card.SetToCard(c);
+            if(GameManager.instance.activePlayer.DeckSize < GameManager.instance.cardsPerDeck + GameManager.instance.jokersPerDeck)
+                AudioManager.instance.Play(AudioManager.instance.sockMeBtn);
         }
         else
         {
@@ -214,4 +230,8 @@ public class GameGUI : MonoBehaviour
         tutorial.gameObject.SetActive(!tutorial.gameObject.activeSelf);
     }
 
+    public void PlayClick()
+    {
+        AudioManager.instance.Play(AudioManager.instance.generalMenuSelect);
+    }
 }

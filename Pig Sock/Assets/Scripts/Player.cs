@@ -41,6 +41,11 @@ public class Player
     public int currentCardIndex = -1;
     public CollectedCard[] roundScores;
 
+    public override string ToString()
+    {
+        return data.name;
+    }
+
     public int Score
     {
         get

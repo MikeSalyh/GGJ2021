@@ -57,8 +57,13 @@ public class LobbyManager : MonoBehaviour
 
         MetagameManager.instance.playerData = output.ToArray();
         MetagameManager.instance.GoToGameplay();
+        AudioManager.instance.Play(AudioManager.instance.gameStart);
     }
 
+    public void PlayClick()
+    {
+        AudioManager.instance.Play(AudioManager.instance.generalMenuSelect);
+    }
 
     //STRETCH GOAL: The ability to tab
     //private void Update()

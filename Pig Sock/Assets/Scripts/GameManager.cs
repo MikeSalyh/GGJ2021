@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
     public int jokersPerDeck = 1;
+    public int jackpotThreshhold = 20; //used for FX
     public readonly float gameEndDelay = 2f;
 
     
@@ -201,6 +202,9 @@ public class GameManager : MonoBehaviour
         if (AllActionsDone)
         {
             CurrentState = GameState.RoundOver;
+            if (OnEndTurn != null)
+                OnEndTurn.Invoke(activePlayer);
+
             if (OnRoundOver != null)
                 OnRoundOver.Invoke();
 
