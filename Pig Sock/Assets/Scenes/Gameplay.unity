@@ -2512,11 +2512,13 @@ MonoBehaviour:
   playersNameText: {fileID: 1425522233}
   multiplierText: {fileID: 1020353214}
   takeCardText: {fileID: 1216925384}
+  sockMeText: {fileID: 1694037740}
   luckySuit: {fileID: 1022953178}
   sockMe: {fileID: 1976280481}
   takeCard: {fileID: 853914750}
   card: {fileID: 2261152837833842098}
   peekCard: {fileID: 1274312774}
+  gameArea: {fileID: 828090988}
 --- !u!1001 &2261152837833842097
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -75,7 +75,7 @@ public class Player
     public void Init()
     {
         GameManager.instance.OnNewGame += HandleNewGame;
-        OnBust += EndTurn;
+        //OnBust += EndTurn;
         OnTake += EndTurn;
         OnJackpot += EndTurn;
     }

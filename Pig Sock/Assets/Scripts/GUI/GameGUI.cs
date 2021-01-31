@@ -12,10 +12,11 @@ public class GameGUI : MonoBehaviour
     public Transform playerScoreHolder;
     public CanvasGroup curtain;
 
-    public TextMeshProUGUI playersNameText, multiplierText, takeCardText;
+    public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
     public SuitGraphic luckySuit;
     public Button sockMe, takeCard;
     public CardVisualization card, peekCard;
+    public GameObject gameArea;
 
     private void Awake()
     {
@@ -54,7 +55,6 @@ public class GameGUI : MonoBehaviour
             scoreCards[i].SetUp(GameManager.instance.players[i]);
         }
         card.ShowBack();
-        takeCardText.text = "Take";
         peekCard.gameObject.SetActive(false);
     }
 
@@ -83,17 +83,20 @@ public class GameGUI : MonoBehaviour
         card.gameObject.SetActive(true);
         card.ShowBack();
         takeCardText.text = "Take";
+        sockMeText.text = "Sock Me";
         GameManager.instance.activePlayer.OnSock += DoUpdateCard;
-        GameManager.instance.activePlayer.OnTake += DoTakeCard;
-        GameManager.instance.activePlayer.OnPeek += DoPeek;
+        GameManager.instance.activePlayer.OnTake += HandleTakeCard;
+        GameManager.instance.activePlayer.OnPeek += HandlePeek;
+        GameManager.instance.activePlayer.OnBust += HandleBust;
     }
 
     void HandleEndTurn(Player p)
     {
         playersNameText.text = "";
         GameManager.instance.activePlayer.OnSock -= DoUpdateCard;
-        GameManager.instance.activePlayer.OnTake -= DoTakeCard;
-        GameManager.instance.activePlayer.OnPeek -= DoPeek;
+        GameManager.instance.activePlayer.OnTake -= HandleTakeCard;
+        GameManager.instance.activePlayer.OnPeek -= HandlePeek;
+        GameManager.instance.activePlayer.OnBust -= HandleBust;
     }
 
     void HandleGameOver()
@@ -109,13 +112,20 @@ public class GameGUI : MonoBehaviour
         GameManager.instance.activePlayer.TakeCard();
     }
 
-    public void DoPeek(Card c)
+    void HandleBust(Card c)
+    {
+        sockMeText.text = "Bust!";
+        takeCardText.text = "Pass Turn";
+        card.transform.DOShakePosition(1f, 5f);
+    }
+
+    public void HandlePeek(Card c)
     {
         peekCard.SetToCard(c);
         peekCard.gameObject.SetActive(true);
     }
 
-    public void DoTakeCard(Card c)
+    public void HandleTakeCard(Card c)
     {
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(false);
@@ -129,7 +139,7 @@ public class GameGUI : MonoBehaviour
         }
         else {
             sockMe.interactable = GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn;
-            takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.Jackpot) && GameManager.instance.activePlayer.currentCardIndex >= 0;
+            takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.Jackpot || GameManager.instance.activePlayer.currentState == Player.PlayerState.Bust) && GameManager.instance.activePlayer.currentCardIndex >= 0;
         }
     }
 
