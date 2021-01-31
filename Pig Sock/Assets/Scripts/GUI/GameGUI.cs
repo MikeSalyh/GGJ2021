@@ -19,6 +19,7 @@ public class GameGUI : MonoBehaviour
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup cardDeckArea, controlsArea;
     public GameObject tutorial;
+    public Transform cardCenter;
 
     private void Awake()
     {
@@ -93,8 +94,8 @@ public class GameGUI : MonoBehaviour
 
         //Fading & animating in
         cardDeckArea.DOKill();
-        cardDeckArea.transform.localPosition = new Vector3(-380, -560f, 0f); //I don't understand this offset. Worrying.
-        cardDeckArea.transform.DOLocalMoveY(100, 0.5f).SetEase(Ease.OutExpo);
+        cardDeckArea.transform.position = cardCenter.transform.position + new Vector3(0f, -560f, 0f); 
+        cardDeckArea.transform.DOLocalMoveY(12, 0.5f).SetEase(Ease.OutExpo);
         playersNameText.DOKill();
         playersNameText.alpha = 0f;
         playersNameText.DOFade(1f, 0.25f);
