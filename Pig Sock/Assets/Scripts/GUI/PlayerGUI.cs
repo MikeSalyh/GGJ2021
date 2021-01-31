@@ -7,33 +7,37 @@ using TMPro;
 public class PlayerGUI : MonoBehaviour
 {
     [HideInInspector] public Player playerRef;
-    public Button hitMe, take;
-    public TextMeshProUGUI scoreList, collectionValue;
-    public CardVisualization card;
+    public Button hitMe, take, peek;
+    public TextMeshProUGUI scoreList, collectionValue, discardAction;
+    public CardVisualization card, nextCard;
 
     public void Init(Player playerRef)
     {
         this.playerRef = playerRef;
         hitMe.onClick.AddListener(playerRef.HitMe);
         take.onClick.AddListener(playerRef.TakeCard);
+        peek.onClick.AddListener(playerRef.Peek);
         playerRef.OnHit += DoUpdateCard;
         playerRef.OnTake += DoTakeCard;
+        playerRef.OnPeek += DoPeek;
         playerRef.OnEndTurn += UpdateScoreList;
     }
 
     public void DoNewGameGraphics()
     {
         card.ShowBack();
-        collectionValue.text = "Take Card";
+        collectionValue.text = "Take ";
         UpdateScoreList();
+        nextCard.gameObject.SetActive(false);
     }
 
     public void DoNewRoundGraphics()
     {
+        nextCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
         UpdateScoreList();
         card.ShowBack();
-        collectionValue.text = "Take Card";
+        collectionValue.text = "Take ";
     }
 
     public void UpdateScoreList()
@@ -63,10 +67,26 @@ public class PlayerGUI : MonoBehaviour
     {
         card.SetToCard(c);
         collectionValue.text = "Take Card   " + string.Format("(+{0})", playerRef.CurrentPot);
+        if (c.type == Card.CardType.Peek)
+        {
+            discardAction.text = "Collect";
+        }
+        else
+        {
+            discardAction.text = "Discard";
+        }
+        nextCard.gameObject.SetActive(false);
+    }
+
+    public void DoPeek(Card c)
+    {
+        nextCard.SetToCard(c);
+        nextCard.gameObject.SetActive(true);
     }
 
     public void DoTakeCard(Card c)
     {
+        nextCard.gameObject.SetActive(false);
         card.gameObject.SetActive(false);
         UpdateScoreList();
     }
@@ -75,6 +95,7 @@ public class PlayerGUI : MonoBehaviour
     void Update()
     {
         hitMe.interactable = playerRef.currentState == Player.PlayerState.PlayerTurn;
-        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.Jackpot) && playerRef.currentCardIndex >= 0;
+        take.interactable = (playerRef.currentState == Player.PlayerState.PlayerTurn || playerRef.currentState == Player.PlayerState.Jackpot) && playerRef.currentCardIndex >= 0 && playerRef.CurrentCard.type != Card.CardType.Peek;
+        peek.interactable = playerRef.currentState == Player.PlayerState.PlayerTurn && playerRef.CanPeek;
     }
 }

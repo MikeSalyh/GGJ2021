@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
     public int jokersPerDeck = 1;
+    public int peeksPerDeck = 1;
 
     
     public enum GameState
@@ -49,7 +50,7 @@ public class GameManager : MonoBehaviour
     public GameAction OnRoundOver;
 
     public Card[] fullDeck;
-    public bool debug__putJokersAtEnd = false;
+    public bool debug__putSpecialsAtEnd = false;
 
 
     private void Awake()

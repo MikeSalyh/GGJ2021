@@ -15,6 +15,7 @@ public class CardVisualization : MonoBehaviour
     private Image image;
     [SerializeField] private Sprite backSprite;
     [SerializeField] private Sprite jokerSprite;
+    [SerializeField] private Sprite peekSprite;
     [SerializeField] private SuitSprites[] sprites;
 
     // Start is called before the first frame update
@@ -35,11 +36,14 @@ public class CardVisualization : MonoBehaviour
 
     private Sprite GetSprite(Card c)
     {
-        if (c.isJoker)
+        if (c.type == Card.CardType.Joker)
         {
             return jokerSprite;
         }
-        else
+        else if (c.type == Card.CardType.Peek)
+        {
+            return peekSprite;
+        }else
         {
             for (int i = 0; i < sprites.Length; i++)
             {

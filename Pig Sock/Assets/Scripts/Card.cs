@@ -15,12 +15,32 @@ public class Card
 
     public Suit suit;
     public int value;
-    public bool isJoker = false;
 
-    public Card(Suit suit, int value, bool isJoker = false)
+    public CardType type;
+    public enum CardType
+    {
+        Normal,
+        Joker,
+        Peek
+    }
+
+    public Card(Suit suit, int value)
     {
         this.suit = suit;
         this.value = value;
-        this.isJoker = isJoker;
+    }
+
+    public Card(CardType type)
+    {
+        switch (type) {
+            case CardType.Joker:
+                this.type = CardType.Joker;
+                break;
+            case CardType.Peek:
+                this.type = CardType.Peek;
+                break;
+            case CardType.Normal:
+                throw new System.Exception("Cannot construct normal cards this way");
+        }
     }
 }

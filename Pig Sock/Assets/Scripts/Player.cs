@@ -15,7 +15,9 @@ public class Player
     public CardAction OnHit;
     public CardAction OnTake;
     public CardAction OnJackpot;
+    public CardAction OnPeek;
     public GameManager.GameAction OnEndTurn;
+    public int peeks = 0;
 
     public enum PlayerState
     {
@@ -57,14 +59,24 @@ public class Player
             myHand = GameManager.instance.fullDeck.OrderBy(x => UnityEngine.Random.value).Take(GameManager.instance.cardsPerDeck).ToList<Card>();
         }
 
+        //ADD SPECIAL CARDS:
         for (int i = 0; i < GameManager.instance.jokersPerDeck; i++)
         {
             Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
             int randomIndex = UnityEngine.Random.Range(1, myHand.Count);
 
-            if (GameManager.instance.debug__putJokersAtEnd)
+            if (GameManager.instance.debug__putSpecialsAtEnd)
                 randomIndex = myHand.Count;
-            myHand.Insert(randomIndex, new Card(randomSuit, 0, true));
+            myHand.Insert(randomIndex, new Card(Card.CardType.Joker));
+        }
+        for (int i = 0; i < GameManager.instance.peeksPerDeck; i++)
+        {
+            Card.Suit randomSuit = (Card.Suit)UnityEngine.Random.Range(0, Enum.GetNames(typeof(Card.Suit)).Length);
+            int randomIndex = UnityEngine.Random.Range(1, myHand.Count);
+
+            if (GameManager.instance.debug__putSpecialsAtEnd)
+                randomIndex = myHand.Count;
+            myHand.Insert(randomIndex, new Card(Card.CardType.Peek));
         }
     }
 
@@ -78,12 +90,15 @@ public class Player
 
     public void HitMe()
     {
+        if (currentCardIndex > 0 && CurrentCard.type == Card.CardType.Peek)
+            peeks++;
+
         currentCardIndex++;
         currentState = PlayerState.Reveal; //only matters for future corotuines.
         if (OnHit != null)
             OnHit.Invoke(CurrentCard);
 
-        if (CurrentCard.isJoker)
+        if (CurrentCard.type == Card.CardType.Joker)
         {
             Bust();
         }
@@ -94,6 +109,18 @@ public class Player
             else
                 currentState = PlayerState.PlayerTurn;
         }
+    }
+
+    public bool CanPeek
+    {
+        get { return peeks > 0 && HasNextCard; }
+    }
+
+    public void Peek()
+    {
+        peeks--;
+        if (OnPeek != null)
+            OnPeek.Invoke(NextCard);
     }
 
     public void TakeCard()
@@ -117,9 +144,9 @@ public class Player
             OnJackpot.Invoke(CurrentCard);
     }
 
-
     public void HandleNewGame()
     {
+        peeks = 0;
         roundScores = new int[GameManager.instance.maxRounds];
         for (int i = 0; i < roundScores.Length; i++)
             roundScores[i] = -1;
@@ -129,6 +156,19 @@ public class Player
     {
         get {
             return myHand[currentCardIndex];
+        }
+    }
+
+    public bool HasNextCard
+    {
+        get { return (currentCardIndex + 1 <= myHand.Count); }
+    }
+
+    public Card NextCard
+    {
+        get
+        {
+            return myHand[currentCardIndex + 1];
         }
     }
 
