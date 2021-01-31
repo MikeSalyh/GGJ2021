@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
     {
         isMuted = !isMuted;
         sfxSrc.volume = isMuted ? 0 : 1;
-        musicSrc.volume = isMuted ? 0 : 1;
+        musicSrc.volume = isMuted ? 0 : musicVolume;
     }
 
     private void Awake()
