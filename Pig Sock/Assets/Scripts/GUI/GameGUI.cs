@@ -92,9 +92,13 @@ public class GameGUI : MonoBehaviour
         GameManager.instance.activePlayer.OnBust += HandleBust;
 
         //Fading & animating in
+        cardDeckArea.DOKill();
         cardDeckArea.transform.localPosition = new Vector3(-380, -560f, 0f); //I don't understand this offset. Worrying.
         cardDeckArea.transform.DOLocalMoveY(100, 0.5f).SetEase(Ease.OutExpo);
+        playersNameText.DOKill();
+        playersNameText.alpha = 0f;
         playersNameText.DOFade(1f, 0.25f);
+        controlsArea.DOKill();
         controlsArea.alpha = 0f;
         controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
     }
@@ -142,7 +146,9 @@ public class GameGUI : MonoBehaviour
 
     private IEnumerator CTakeCard(Card c){
         peekCard.gameObject.SetActive(false);
+        controlsArea.DOKill();
         controlsArea.DOFade(0f, 0.25f);
+        playersNameText.DOKill();
         playersNameText.DOFade(0f, 0.25f);
         if (GameManager.instance.activePlayer.DeckSize > 1)
             card.SetFaceDown();
@@ -158,17 +164,19 @@ public class GameGUI : MonoBehaviour
                 break;
             }
         }
-        specialPurposeCard.CollectAs(c, card.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
 
+        int bestRound = GameManager.instance.currentRoundIndex >= GameManager.instance.maxRounds ? GameManager.instance.maxRounds - 1 : GameManager.instance.currentRoundIndex;
+        specialPurposeCard.CollectAs(c, card.transform, destination.rounds[bestRound].transform);
         if (c.suit == GameManager.instance.luckySuit && c.type == Card.CardType.Normal)
         {
-            specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
+            specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[bestRound].transform);
         }
 
         GameManager.instance.RequestDelay(1.51f);
         yield return new WaitForSeconds(1f);
 
         //Fading
+        cardDeckArea.transform.DOKill();
         cardDeckArea.transform.DOLocalMoveY(570f, 0.5f).SetEase(Ease.InExpo);
     }
 
@@ -191,11 +199,11 @@ public class GameGUI : MonoBehaviour
 
     void Update()
     {
-        if (GameManager.instance.activePlayer == null) {
+        if (GameManager.instance.activePlayer == null || controlsArea.alpha < 0.5f) {
             sockMe.interactable = false;
             takeCard.interactable = false;
         }
-        else {
+        else{
             sockMe.interactable = GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn;
             takeCard.interactable = (GameManager.instance.activePlayer.currentState == Player.PlayerState.PlayerTurn || GameManager.instance.activePlayer.currentState == Player.PlayerState.LastCard || GameManager.instance.activePlayer.currentState == Player.PlayerState.Bust) && GameManager.instance.activePlayer.currentCardIndex >= 0;
         }
