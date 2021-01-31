@@ -47,29 +47,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sfxSrc: {fileID: 1278764381198591248}
   musicSrc: {fileID: 4757734734318258556}
-  music1: {fileID: 0}
-  musicVolume: 0.5
+  music1: {fileID: 8300000, guid: 705dfca1d2e77f24c91926325acf2339, type: 3}
+  musicVolume: 0.25
   sockMeBtn:
-  - {fileID: 8300000, guid: 88c9c4111d4e3424fa06ad61047f32d6, type: 3}
-  - {fileID: 8300000, guid: ea7eaadfda3738c428885526c451bf82, type: 3}
+  - {fileID: 8300000, guid: cd9e4c09f208fdb4aaa70c1b3457eb0b, type: 3}
+  - {fileID: 8300000, guid: dddcd8578b442d84e97e60d4fab40138, type: 3}
+  - {fileID: 8300000, guid: 33d95547a812ed64585b7e7db477b8eb, type: 3}
   takeSock:
-  - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
+  - {fileID: 8300000, guid: 2aba2eb139233e74e8928f8d7a05d104, type: 3}
   generalMenuSelect:
-  - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
-  gameStart:
-  - {fileID: 8300000, guid: 360e34d12a62d8144ab1279d63d52559, type: 3}
-  gameEnd:
-  - {fileID: 8300000, guid: 360e34d12a62d8144ab1279d63d52559, type: 3}
+  - {fileID: 8300000, guid: 4ae28b850dfcaf54da061a23874f8d70, type: 3}
+  gameStart: []
+  gameEnd: []
   peek:
-  - {fileID: 8300000, guid: cf3c76c55f61d4e4bb13d694ab2f9af6, type: 3}
+  - {fileID: 8300000, guid: bfcc8bca94af8d24cbfe1a8a16ce48e8, type: 3}
   bust:
-  - {fileID: 8300000, guid: 6c4915ae06a705546a1dcc9854984476, type: 3}
+  - {fileID: 8300000, guid: 648adb25caa36af4baed83358bebbc4d, type: 3}
   jackpot:
-  - {fileID: 8300000, guid: 360e34d12a62d8144ab1279d63d52559, type: 3}
+  - {fileID: 8300000, guid: 93d9dfd263dde7b4aad1f9b8e5e87841, type: 3}
+  - {fileID: 8300000, guid: 12fe5c90006dad940be84d9119ea7c39, type: 3}
+  - {fileID: 8300000, guid: ae41e4d4a8b7a0547b44a9978ee5e7b2, type: 3}
   deckExit:
-  - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
+  - {fileID: 8300000, guid: 96ad29cf7d8817d4193f098048f7ace5, type: 3}
   deckEnter:
-  - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
+  - {fileID: 8300000, guid: 9e2e3a881aa46694c8df43fb2f3970fb, type: 3}
   isMuted: 0
 --- !u!82 &1278764381198591248
 AudioSource:
