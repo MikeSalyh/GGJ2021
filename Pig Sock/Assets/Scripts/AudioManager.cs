@@ -25,6 +25,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] jackpot;
     public AudioClip[] deckExit, deckEnter;
 
+    public bool isMuted;
+    public void ToggleMute()
+    {
+        isMuted = !isMuted;
+        sfxSrc.volume = isMuted ? 0 : 1;
+        musicSrc.volume = isMuted ? 0 : 1;
+    }
+
     private void Awake()
     {
         if (instance == null)
