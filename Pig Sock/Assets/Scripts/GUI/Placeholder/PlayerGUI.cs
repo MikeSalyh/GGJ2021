@@ -14,9 +14,9 @@ public class PlayerGUI : MonoBehaviour
     public void Init(Player playerRef)
     {
         this.playerRef = playerRef;
-        hitMe.onClick.AddListener(playerRef.HitMe);
+        hitMe.onClick.AddListener(playerRef.SockMe);
         take.onClick.AddListener(playerRef.TakeCard);
-        playerRef.OnHit += DoUpdateCard;
+        playerRef.OnSock += DoUpdateCard;
         playerRef.OnTake += DoTakeCard;
         playerRef.OnPeek += DoPeek;
         playerRef.OnEndTurn += UpdateScoreList;

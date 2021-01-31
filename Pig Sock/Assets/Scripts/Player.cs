@@ -53,7 +53,7 @@ public class Player
     }
     public delegate void CardAction(Card c);
     public CardAction OnBust;
-    public CardAction OnHit;
+    public CardAction OnSock;
     public CardAction OnTake;
     public CardAction OnJackpot;
     public CardAction OnPeek;
@@ -121,12 +121,12 @@ public class Player
             OnEndTurn.Invoke();
     }
 
-    public void HitMe()
+    public void SockMe()
     {
         currentCardIndex++;
         currentState = PlayerState.Reveal; //only matters for future corotuines.
-        if (OnHit != null)
-            OnHit.Invoke(CurrentCard);
+        if (OnSock != null)
+            OnSock.Invoke(CurrentCard);
 
         if (CurrentCard.type == Card.CardType.Joker)
         {

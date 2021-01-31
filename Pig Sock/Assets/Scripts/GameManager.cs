@@ -50,10 +50,16 @@ public class GameManager : MonoBehaviour
     public GameAction OnNewRound;
     public GameAction OnRoundOver;
 
+    public delegate void PlayerAction(Player p);
+    public PlayerAction OnStartTurn;
+    public PlayerAction OnEndTurn;
+
+
     public Card[] fullDeck;
     public bool debug__putSpecialsAtEnd = false;
 
     private Queue<Player> activePlayers;
+    public Player activePlayer;
 
     private void Awake()
     {
@@ -128,12 +134,17 @@ public class GameManager : MonoBehaviour
         {
             if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Waiting)
             {
-                activePlayers.Peek().currentState = Player.PlayerState.PlayerTurn;
+                activePlayer = activePlayers.Peek();
+                activePlayer.currentState = Player.PlayerState.PlayerTurn;
+                if (OnStartTurn != null)
+                    OnStartTurn.Invoke(activePlayer);
             }
             else if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Done)
             {
-                Debug.Log("Dequing player");
                 activePlayers.Dequeue();
+                if (OnEndTurn != null)
+                    OnEndTurn.Invoke(activePlayer);
+                activePlayer = null;
             }
         }
     }
