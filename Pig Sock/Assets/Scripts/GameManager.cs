@@ -192,4 +192,9 @@ public class GameManager : MonoBehaviour
         if (OnGameOver != null)
             OnGameOver.Invoke();
     }
+
+    public void QuitToMenu()
+    {
+        MetagameManager.instance.GoToMenu();
+    }
 }
