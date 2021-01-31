@@ -121,7 +121,7 @@ public class Player
 
     public void EndTurn(Card c = null)
     {
-        roundScores[GameManager.instance.currentRoundIndex] = new CollectedCard(c, c.suit == GameManager.instance.luckySuit);
+        roundScores[GameManager.instance.currentRoundIndex] = new CollectedCard(c, c.type != Card.CardType.Joker && c.suit == GameManager.instance.luckySuit);
         currentState = PlayerState.Done;
         if (OnEndTurn != null)
             OnEndTurn.Invoke();

@@ -84,10 +84,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Init from fallback");
             players = new Player[numPlayers];
+            PlayerData[] dataToMetagame = new PlayerData[numPlayers];
             for (int i = 0; i < players.Length; i++)
             {
                 players[i] = new Player();
+                dataToMetagame[i] = players[i].data;
             }
+            MetagameManager.instance.playerData = dataToMetagame;
         }
 
         Invoke("NewGame", 0.1f); // A little janky; don't start the new game immediately, so other classes can init.
@@ -210,6 +213,25 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("The game is over!");
         CurrentState = GameState.GameOver;
+
+        //Save out the relevant end of game data.
+        for (int i = 0; i < players.Length; i++)
+        {
+            players[i].data.finalScore = players[i].Score;
+            int bestVal = -99;
+            Card bestCard = null;
+            for (int j = 0; j < players[i].roundScores.Length; j++) {
+                int cardVal = players[i].roundScores[j].card.value;
+                if (players[i].roundScores[j].wasMatch) cardVal *= 2;
+                if (cardVal > bestVal)
+                {
+                    bestVal = cardVal;
+                    bestCard = players[i].roundScores[j].card;
+                }
+            }
+            players[i].data.bestCard = bestCard;
+        }
+
         if (OnGameOver != null)
             OnGameOver.Invoke();
     }
