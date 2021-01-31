@@ -18,11 +18,13 @@ public class CardVisualization : MonoBehaviour
     [SerializeField] private Sprite jokerSprite;
     [SerializeField] private SuitSprites[] sprites;
     public GameObject specialGraphics;
+    private Vector3 defaultScale;
 
     // Start is called before the first frame update
     void Awake()
     {
         image = GetComponent<Image>();
+        defaultScale = transform.localScale;
     }
 
     public void SetToCard(Card c)
@@ -31,18 +33,22 @@ public class CardVisualization : MonoBehaviour
         else image.sprite = GetSprite(c);
     }
 
-    public void flipCard(Card c, float time = 0.35f)
+    public void flipCard(Card c, bool showSpecialGraphicsAfterFlip = false, float time = 0.35f)
     {
-        StartCoroutine(cFlipCard(c, time));
+        StartCoroutine(cFlipCard(c, showSpecialGraphicsAfterFlip, time));
     }
-    IEnumerator cFlipCard(Card c, float time)
+    IEnumerator cFlipCard(Card c, bool showSpecialGraphicsAfterFlip, float time)
     {
-        SetFaceDown();
-        transform.localScale = Vector3.one;
+        SetFaceDown(!showSpecialGraphicsAfterFlip);
+        transform.localScale = defaultScale;
         transform.eulerAngles = Vector3.zero;
         transform.DOLocalRotate(new Vector3(0, -90f, 0), time / 2);
         transform.DOLocalMoveZ(5f, time / 2f);
         yield return new WaitForSeconds(time / 2);
+        if (specialGraphics != null)
+        {
+            specialGraphics.gameObject.SetActive(showSpecialGraphicsAfterFlip);
+        }
         transform.eulerAngles = new Vector3(0, 90f, 0);
         transform.DOLocalMoveZ(-5f, time / 2f);
         SetToCard(c);
@@ -59,7 +65,7 @@ public class CardVisualization : MonoBehaviour
     {
         SetToCard(c);
         transform.localEulerAngles = Vector3.zero;
-        transform.localScale = Vector3.one;
+        transform.localScale = defaultScale;
         transform.position = refTransform.position;
         transform.DOKill();
         transform.DOLocalMoveZ(-100, time / 2f).SetEase(Ease.OutBack);
@@ -97,9 +103,11 @@ public class CardVisualization : MonoBehaviour
         yield break;
     }
 
-    public void SetFaceDown()
+    public void SetFaceDown(bool showSpecialGraphics = false)
     {
         image.sprite = backSprite;
+        if (specialGraphics != null)
+            specialGraphics.gameObject.SetActive(showSpecialGraphics);
     }
 
     public bool IsFaceDown

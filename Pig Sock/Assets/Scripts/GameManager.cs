@@ -116,7 +116,6 @@ public class GameManager : MonoBehaviour
             OnNewGame.Invoke();
 
         OnRoundOver += StartNewRound;
-        ChangeLuckySuit();
         StartNewRound();
     }
 

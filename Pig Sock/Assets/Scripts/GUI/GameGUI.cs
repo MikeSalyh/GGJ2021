@@ -14,7 +14,7 @@ public class GameGUI : MonoBehaviour
     private Card previousCard;
 
     public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
-    public CardVisualization luckySuit;
+    public CardVisualization luckySuit, specialPurposeLucky;
     public Button sockMe, takeCard;
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup gameArea;
@@ -59,11 +59,14 @@ public class GameGUI : MonoBehaviour
         }
         card.SetFaceDown();
         peekCard.gameObject.SetActive(false);
+        //luckySuit.SetFaceDown();
+        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
     }
 
     void HandleChangeLuckySuit()
     {
-        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
+        multiplierText.text = (GameManager.instance.matchMultiplier.ToString() + "x") + " points if matching";
+        luckySuit.flipCard(new Card(GameManager.instance.luckySuit, 1), true);
     }
 
     void HandleRoundOver()
@@ -72,12 +75,12 @@ public class GameGUI : MonoBehaviour
 
     void HandleNewRound()
     {
-        luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));
-        multiplierText.text = (GameManager.instance.matchMultiplier.ToString() + "x") + " points if matching";
     }
 
     void HandleStartTurn(Player p)
     {
+        //gameArea.transform.localPosition = new Vector3(1240f, 0f, 0f);
+        //gameArea.transform.DOLocalMoveX(480f, 0.75f);
         playersNameText.text = p.data.name + "'s Turn";
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
@@ -145,6 +148,12 @@ public class GameGUI : MonoBehaviour
             }
         }
         specialPurposeCard.CollectAs(c, card.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
+
+        if (c.suit == GameManager.instance.luckySuit && c.type == Card.CardType.Normal)
+        {
+            //luckySuit.SetFaceDown();
+            specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[GameManager.instance.currentRoundIndex].transform);
+        }
     }
 
     public void HandleSockMe(Card c)
