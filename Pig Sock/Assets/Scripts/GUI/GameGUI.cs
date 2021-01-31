@@ -15,10 +15,10 @@ public class GameGUI : MonoBehaviour
 
     public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
     public CardVisualization luckySuit, specialPurposeLucky;
-    public Button sockMe, takeCard;
+    public Button sockMe, takeCard, gameOverButton;
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup cardDeckArea, controlsArea;
-    public GameObject tutorial;
+    public GameObject tutorial, gameplayArea;
     public Transform cardCenter;
     public AIAdvisor ai;
 
@@ -123,7 +123,12 @@ public class GameGUI : MonoBehaviour
     void HandleGameOver()
     {
         cardDeckArea.gameObject.SetActive(false);
+        gameplayArea.gameObject.SetActive(false);
         AudioManager.instance.Play(AudioManager.instance.gameEnd);
+        gameOverButton.gameObject.SetActive(true);
+        gameOverButton.GetComponent<CanvasGroup>().alpha = 0;
+        gameOverButton.GetComponent<CanvasGroup>().DOFade(1f, 1f);
+
     }
 
     public void ClickSockMe()

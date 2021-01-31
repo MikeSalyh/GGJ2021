@@ -37,7 +37,8 @@ public class CardVisualization : MonoBehaviour
 
     public void flipCard(Card c, bool showSpecialGraphicsAfterFlip = false, float time = 0.35f)
     {
-        StartCoroutine(cFlipCard(c, showSpecialGraphicsAfterFlip, time));
+        if(gameObject.activeSelf)
+            StartCoroutine(cFlipCard(c, showSpecialGraphicsAfterFlip, time));
     }
     IEnumerator cFlipCard(Card c, bool showSpecialGraphicsAfterFlip, float time)
     {

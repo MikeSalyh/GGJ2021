@@ -29,8 +29,6 @@ public class GameManager : MonoBehaviour
     public int matchMultiplier = 2;
     public int jokersPerDeck = 1;
     public int jackpotThreshhold = 20; //used for FX
-    public readonly float gameEndDelay = 2f;
-
     
     public enum GameState
     {
@@ -261,11 +259,9 @@ public class GameManager : MonoBehaviour
 
         if (OnGameOver != null)
             OnGameOver.Invoke();
-
-        Invoke("GoToFinale", gameEndDelay);
     }
 
-    void GoToFinale()
+    public void GoToFinale()
     {
         MetagameManager.instance.GoToFinale();
     }
