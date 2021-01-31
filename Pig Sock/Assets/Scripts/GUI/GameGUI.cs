@@ -78,7 +78,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleStartTurn(Player p)
     {
-        playersNameText.text = p.myName + "'s Turn";
+        playersNameText.text = p.data.name + "'s Turn";
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
         card.ShowBack();

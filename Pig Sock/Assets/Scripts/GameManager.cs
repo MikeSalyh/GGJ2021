@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public ShuffleMode shuffleMode;
     public bool useAddativeValues = false;
     public bool highestScoreGoesFirst = true;
+    public bool acesPeek = true;
 
     [Header("Variables")]
     public int numPlayers = 1;
@@ -27,7 +28,6 @@ public class GameManager : MonoBehaviour
     public int numCardsPerSuit = 13;
     public int matchMultiplier = 2;
     public int jokersPerDeck = 1;
-    public int peeksPerDeck = 1;
 
     
     public enum GameState
@@ -74,18 +74,34 @@ public class GameManager : MonoBehaviour
 
     protected void NewGame()
     {
-        Debug.Log("New game!");
-        CurrentState = GameState.Playing;
-        players = new Player[numPlayers];
+        if (MetagameManager.instance.playerData != null && MetagameManager.instance.playerData.Length > 0)
+        {
+            players = new Player[MetagameManager.instance.playerData.Length];
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i] = new Player();
+                players[i].data = MetagameManager.instance.playerData[i]; 
+            }
+        }
+        else
+        {
+            players = new Player[numPlayers];
+            for (int i = 0; i < players.Length; i++)
+            {
+                players[i] = new Player();
+            }
+        }
+
         for (int i = 0; i < players.Length; i++)
         {
-            players[i] = new Player();
             players[i].Init();
             players[i].OnEndTurn += TryEndRound;
         }
         
         GenerateFullDeck();
         currentRoundIndex = -1;
+        CurrentState = GameState.Playing;
+
         if (OnNewGame != null)
             OnNewGame.Invoke();
 

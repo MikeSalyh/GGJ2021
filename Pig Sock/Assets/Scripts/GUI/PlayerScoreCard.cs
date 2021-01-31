@@ -18,7 +18,7 @@ public class PlayerScoreCard : MonoBehaviour
     public void SetUp(Player p)
     {
         playerRef = p;
-        nametag.text = p.myName;
+        nametag.text = p.data.name;
         scoreNumber.text = p.Score.ToString();
         foreach (Transform child in cardHolder.transform)
         {

@@ -9,6 +9,7 @@ public class MetagameManager : MonoBehaviour
 {
     public static MetagameManager instance;
     public CanvasGroup dimPlane;
+    public PlayerData[] playerData;
 
     public enum GameState
     {
@@ -117,6 +118,7 @@ public class MetagameManager : MonoBehaviour
             case GameState.Gameplay:
                 break;
             case GameState.Lobby:
+                playerData = new PlayerData[0];
                 break;
             case GameState.Finale:
                 break;

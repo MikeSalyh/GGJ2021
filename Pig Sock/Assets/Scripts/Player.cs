@@ -33,10 +33,9 @@ public class CollectedCard
     }
 }
 
-[System.Serializable]
 public class Player
 {
-    public string myName = "Name";
+    public PlayerData data = new PlayerData();
     public List<Card> myHand;
     public int currentCardIndex = -1;
     public CollectedCard[] roundScores;
@@ -134,7 +133,7 @@ public class Player
         }
         else
         {
-            if (HasNextCard && CurrentCard.value == 1)
+            if (HasNextCard && CurrentCard.value == 1 && GameManager.instance.acesPeek)
                 Peek();
 
             if (currentCardIndex + 1 >= GameManager.instance.cardsPerDeck)

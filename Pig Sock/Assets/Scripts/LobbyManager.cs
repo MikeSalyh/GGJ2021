@@ -37,6 +37,7 @@ public class LobbyManager : MonoBehaviour
 
     public void StartGame()
     {
+        List<PlayerData> output = new List<PlayerData>();
         for (int i = 0; i < selectors.Length; i++)
         {
             //Avoid empty names
@@ -46,7 +47,13 @@ public class LobbyManager : MonoBehaviour
                 selectors[i].name = prefix + (i + 1).ToString();
             }
 
-            MetagameManager.instance.GoToGameplay();
+            if (selectors[i].data.type != PlayerData.Type.Off)
+            {
+                output.Add(selectors[i].data);
+            }
         }
+
+        MetagameManager.instance.playerData = output.ToArray();
+        MetagameManager.instance.GoToGameplay();
     }
 }
