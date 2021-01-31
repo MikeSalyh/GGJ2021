@@ -37,8 +37,10 @@ public class Player
         Reveal,
         Bust,
         Take,
-        Jackpot
+        Jackpot,
+        Done
     }
+
     public PlayerState currentState;
 
     public void Init()
@@ -85,7 +87,7 @@ public class Player
     public void EndTurn(Card c = null)
     {
         roundScores[GameManager.instance.currentRoundIndex] = CurrentPot;
-        currentState = PlayerState.Waiting;
+        currentState = PlayerState.Done;
         if (OnEndTurn != null)
             OnEndTurn.Invoke();
     }

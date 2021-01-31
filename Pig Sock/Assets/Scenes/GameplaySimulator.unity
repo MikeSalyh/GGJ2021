@@ -298,14 +298,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRef:
+    myName: Name
     myHand: []
     currentCardIndex: -1
     roundScores: 
-    peeks: 0
     currentState: 0
   hitMe: {fileID: 716102479}
   take: {fileID: 952250242}
-  peek: {fileID: 0}
   scoreList: {fileID: 1827480027}
   collectionValue: {fileID: 1105914493}
   discardAction: {fileID: 1075815941}
@@ -435,7 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuffleMode: 2
   useAddativeValues: 0
-  numPlayers: 2
+  numPlayers: 1
   maxRounds: 3
   cardsPerDeck: 13
   numCardsPerSuit: 13
@@ -1070,7 +1069,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backSprite: {fileID: 21300000, guid: 6d6ed2532f37ef646b03f286efc4db21, type: 3}
   jokerSprite: {fileID: 21300000, guid: fd83c28dc41148e42bf523b6077b70b4, type: 3}
-  peekSprite: {fileID: 21300000, guid: 573b8756470decc499316326902dc1c4, type: 3}
   sprites:
   - suit: 3
     sprites:
@@ -1763,7 +1761,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backSprite: {fileID: 21300000, guid: 6d6ed2532f37ef646b03f286efc4db21, type: 3}
   jokerSprite: {fileID: 21300000, guid: fd83c28dc41148e42bf523b6077b70b4, type: 3}
-  peekSprite: {fileID: 21300000, guid: 573b8756470decc499316326902dc1c4, type: 3}
   sprites:
   - suit: 3
     sprites:
@@ -2831,7 +2828,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backSprite: {fileID: 21300000, guid: 6d6ed2532f37ef646b03f286efc4db21, type: 3}
   jokerSprite: {fileID: 21300000, guid: fd83c28dc41148e42bf523b6077b70b4, type: 3}
-  peekSprite: {fileID: 21300000, guid: 573b8756470decc499316326902dc1c4, type: 3}
   sprites:
   - suit: 3
     sprites:
@@ -3461,14 +3457,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRef:
+    myName: Name
     myHand: []
     currentCardIndex: -1
     roundScores: 
-    peeks: 0
     currentState: 0
   hitMe: {fileID: 1937417649}
   take: {fileID: 1687015716}
-  peek: {fileID: 0}
   scoreList: {fileID: 783984570}
   collectionValue: {fileID: 644430046}
   discardAction: {fileID: 1236806078}
@@ -3646,7 +3641,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backSprite: {fileID: 21300000, guid: 6d6ed2532f37ef646b03f286efc4db21, type: 3}
   jokerSprite: {fileID: 21300000, guid: fd83c28dc41148e42bf523b6077b70b4, type: 3}
-  peekSprite: {fileID: 21300000, guid: 573b8756470decc499316326902dc1c4, type: 3}
   sprites:
   - suit: 3
     sprites:

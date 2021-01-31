@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public Card[] fullDeck;
     public bool debug__putSpecialsAtEnd = false;
 
+    private Queue<Player> activePlayers;
 
     private void Awake()
     {
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
         get
         {
             for (int i = 0; i < players.Length; i++) {
-                if(players[i].currentState != Player.PlayerState.Waiting)
+                if(players[i].currentState != Player.PlayerState.Done)
                     return false;
             }
             return true;
@@ -97,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     public void StartNewRound()
     {
-        Debug.Log("Starting new round");
+        activePlayers = new Queue<Player>(players.OrderBy(x => x.Score));
         currentRoundIndex++;
         for(int i = 0; i < players.Length; i++)
             players[i].GenerateNewHand();
@@ -110,9 +111,25 @@ public class GameManager : MonoBehaviour
 
         //This may become a coroutine after animation is added
         for (int i = 0; i < players.Length; i++)
-            players[i].currentState = Player.PlayerState.PlayerTurn;
+            players[i].currentState = Player.PlayerState.Waiting;
 
         CurrentState = GameState.Playing;
+    }
+
+    private void Update()
+    {
+        if (CurrentState == GameState.Playing)
+        {
+            if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Waiting)
+            {
+                activePlayers.Peek().currentState = Player.PlayerState.PlayerTurn;
+            }
+            else if (activePlayers.Count > 0 && activePlayers.Peek().currentState == Player.PlayerState.Done)
+            {
+                Debug.Log("Dequing player");
+                activePlayers.Dequeue();
+            }
+        }
     }
 
     protected void TryEndRound()
