@@ -51,8 +51,6 @@ public class AIAdvisor : MonoBehaviour
         for (int i = 0; i < GameManager.instance.players.Length; i++)
         {
             float hypotheticalScore = GetPlayerHypotheticalScore(GameManager.instance.players[i]);
-            //Debug.Log(GameManager.instance.players[i].data.name + " " + hypotheticalScore);
-
             if (GameManager.instance.players[i] != activePlayer && hypotheticalScore > scoreToBeat)
             {
                 bestOpponent = GameManager.instance.players[i];
@@ -66,13 +64,8 @@ public class AIAdvisor : MonoBehaviour
             Debug.Log("There was no opponent."); //This is the case where an AI plays itself.
             scoreToBeat = 1;
         }
-
-        Debug.Log("The best opponents hypothetical score was " + scoreToBeat);
-
         //Now that we know the score to beat, compare with self:
         float myHypotheticalScore = GetPlayerHypotheticalScore(activePlayer);
-        Debug.Log("My hypothetical score was " + myHypotheticalScore);
-
         return scoreToBeat - myHypotheticalScore;
 
     }
@@ -111,9 +104,17 @@ public class AIAdvisor : MonoBehaviour
         goodDeal = GetGoodDeal(mood);
 
         if (c.type == Card.CardType.Joker)
+        {
             recommendation = Recommendation.Take;
+        }
+        else if (GameManager.instance.currentRoundIndex  + 1 >= GameManager.instance.maxRounds)
+        {
+            recommendation = GameManager.instance.activePlayer.CurrentPot >= scoreDelta ? Recommendation.Take : Recommendation.SockMe;
+        }
         else
+        {
             recommendation = GameManager.instance.activePlayer.CurrentPot >= goodDeal ? Recommendation.Take : Recommendation.SockMe;
+        }
     }
 
     Mood SetMood(float scoreDelta)
