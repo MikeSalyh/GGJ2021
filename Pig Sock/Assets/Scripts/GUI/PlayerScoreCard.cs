@@ -34,7 +34,13 @@ public class PlayerScoreCard : MonoBehaviour
     {
         if (playerRef != null)
         {
+            //calling this every frame isn't efficient.
+            scoreNumber.text = playerRef.Score.ToString();
             background.enabled = (playerRef.currentState == Player.PlayerState.PlayerTurn);
+            for (int i = 0; i < rounds.Length; i++)
+            {
+                rounds[i].SetCard(playerRef.roundScores[i].card, playerRef.roundScores[i].wasMatch);
+            }
         }
     }
 }

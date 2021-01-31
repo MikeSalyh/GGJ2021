@@ -25,7 +25,8 @@ public class CardVisualization : MonoBehaviour
 
     public void SetToCard(Card c)
     {
-        image.sprite = GetSprite(c);
+        if (c == null) ShowBack();
+        else image.sprite = GetSprite(c);
     }
 
     public void ShowBack()

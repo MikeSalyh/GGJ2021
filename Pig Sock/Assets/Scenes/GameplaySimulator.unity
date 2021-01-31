@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 5394330}
   - component: {fileID: 5394329}
   - component: {fileID: 5394333}
+  - component: {fileID: 5394334}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -244,6 +245,18 @@ MonoBehaviour:
   playersGUIs:
   - {fileID: 1881031184}
   - {fileID: 48795388}
+--- !u!225 &5394334
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5394328}
+  m_Enabled: 1
+  m_Alpha: 0.2
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &48795386
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +314,6 @@ MonoBehaviour:
     myName: Name
     myHand: []
     currentCardIndex: -1
-    roundScores: 
     currentState: 0
   hitMe: {fileID: 716102479}
   take: {fileID: 952250242}
@@ -434,7 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuffleMode: 2
   useAddativeValues: 0
-  numPlayers: 1
+  numPlayers: 2
   maxRounds: 3
   cardsPerDeck: 13
   numCardsPerSuit: 13
@@ -3460,7 +3472,6 @@ MonoBehaviour:
     myName: Name
     myHand: []
     currentCardIndex: -1
-    roundScores: 
     currentState: 0
   hitMe: {fileID: 1937417649}
   take: {fileID: 1687015716}

@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Options")]
     public ShuffleMode shuffleMode;
     public bool useAddativeValues = false;
+    public bool highestScoreGoesFirst = true;
 
     [Header("Variables")]
     public int numPlayers = 1;
@@ -99,7 +100,11 @@ public class GameManager : MonoBehaviour
 
     public void StartNewRound()
     {
-        activePlayers = new Queue<Player>(players.OrderBy(x => x.Score));
+        if (highestScoreGoesFirst)
+            activePlayers = new Queue<Player>(players.OrderBy(x => x.Score));
+        else
+            activePlayers = new Queue<Player>(players);
+
         currentRoundIndex++;
         for(int i = 0; i < players.Length; i++)
             players[i].GenerateNewHand();
