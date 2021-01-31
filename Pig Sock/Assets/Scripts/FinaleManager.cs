@@ -46,4 +46,9 @@ public class FinaleManager : MonoBehaviour
     {
         MetagameManager.instance.GoToGameplay();
     }
+
+    public void PlayClick()
+    {
+        AudioManager.instance.Play(AudioManager.instance.generalMenuSelect);
+    }
 }

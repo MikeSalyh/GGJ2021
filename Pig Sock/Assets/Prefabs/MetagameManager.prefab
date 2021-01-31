@@ -57,7 +57,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5a00ce204573fc64f99ff86961c06740, type: 3}
   gameStart:
   - {fileID: 8300000, guid: 360e34d12a62d8144ab1279d63d52559, type: 3}
-  gameEnd: []
+  gameEnd:
+  - {fileID: 8300000, guid: 360e34d12a62d8144ab1279d63d52559, type: 3}
   peek:
   - {fileID: 8300000, guid: cf3c76c55f61d4e4bb13d694ab2f9af6, type: 3}
   bust:

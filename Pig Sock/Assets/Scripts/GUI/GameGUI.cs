@@ -117,6 +117,7 @@ public class GameGUI : MonoBehaviour
     void HandleGameOver()
     {
         cardDeckArea.gameObject.SetActive(false);
+        AudioManager.instance.Play(AudioManager.instance.gameEnd);
     }
 
     public void ClickSockMe()
