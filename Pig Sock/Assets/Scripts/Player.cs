@@ -71,6 +71,13 @@ public class Player
 
     public PlayerState currentState;
 
+    public Player()
+    {
+        data = new PlayerData();
+        data.name = "SockFan" + UnityEngine.Random.Range(101, 999).ToString();
+
+    }
+
     public void Init()
     {
         GameManager.instance.OnNewGame += HandleNewGame;

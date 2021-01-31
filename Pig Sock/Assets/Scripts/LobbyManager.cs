@@ -12,6 +12,7 @@ public class LobbyManager : MonoBehaviour
     void Start()
     {
         selectors[0].SetType(PlayerData.Type.Human);
+        selectors[0].nameInput.text = "SockFan" + UnityEngine.Random.Range(101, 999).ToString();
         selectors[1].SetType(PlayerData.Type.CPU);
         for (int i = 2; i < selectors.Length; i++)
         {
@@ -49,6 +50,7 @@ public class LobbyManager : MonoBehaviour
 
             if (selectors[i].data.type != PlayerData.Type.Off)
             {
+                selectors[i].data.name = selectors[i].nameInput.text;
                 output.Add(selectors[i].data);
             }
         }

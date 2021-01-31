@@ -322,7 +322,7 @@ PrefabInstance:
     - target: {fileID: 985257098848338927, guid: 949ecc6c6e3109d46a16df92108d4af4,
         type: 3}
       propertyPath: m_Text
-      value: CyberStocking
+      value: R2-DSocks
       objectReference: {fileID: 0}
     - target: {fileID: 4175849315718037726, guid: 949ecc6c6e3109d46a16df92108d4af4,
         type: 3}
@@ -1189,7 +1189,7 @@ PrefabInstance:
     - target: {fileID: 985257098848338927, guid: 949ecc6c6e3109d46a16df92108d4af4,
         type: 3}
       propertyPath: m_Text
-      value: SockBot3000
+      value: CyberStocking
       objectReference: {fileID: 0}
     - target: {fileID: 4175849315718037726, guid: 949ecc6c6e3109d46a16df92108d4af4,
         type: 3}

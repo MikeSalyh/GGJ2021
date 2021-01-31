@@ -15,6 +15,7 @@ public class LobbySelector : MonoBehaviour
 
     private void Awake()
     {
+        data = new PlayerData();
         cg = GetComponent<CanvasGroup>();
     }
 

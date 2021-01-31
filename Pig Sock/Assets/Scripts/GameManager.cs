@@ -69,28 +69,33 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("NewGame", 0.1f); // A little janky; don't start the new game immediately, so other classes can init.
-    }
-
-    protected void NewGame()
-    {
         if (MetagameManager.instance.playerData != null && MetagameManager.instance.playerData.Length > 0)
         {
+            Debug.Log("Init from data");
             players = new Player[MetagameManager.instance.playerData.Length];
             for (int i = 0; i < players.Length; i++)
             {
                 players[i] = new Player();
-                players[i].data = MetagameManager.instance.playerData[i]; 
+                players[i].data = MetagameManager.instance.playerData[i];
             }
+            numPlayers = players.Length;
         }
         else
         {
+            Debug.Log("Init from fallback");
             players = new Player[numPlayers];
             for (int i = 0; i < players.Length; i++)
             {
                 players[i] = new Player();
             }
         }
+
+        Invoke("NewGame", 0.1f); // A little janky; don't start the new game immediately, so other classes can init.
+    }
+
+    protected void NewGame()
+    {
+        
 
         for (int i = 0; i < players.Length; i++)
         {

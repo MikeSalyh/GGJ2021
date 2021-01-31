@@ -501,31 +501,18 @@ MonoBehaviour:
   shuffleMode: 2
   useAddativeValues: 0
   highestScoreGoesFirst: 0
+  acesPeek: 0
   numPlayers: 3
   maxRounds: 5
   cardsPerDeck: 13
   numCardsPerSuit: 13
   matchMultiplier: 2
   jokersPerDeck: 1
-  peeksPerDeck: 1
   currentRoundIndex: -1
   CurrentState: 2
   luckySuit: 0
-  players: []
   fullDeck: []
   debug__putSpecialsAtEnd: 0
-  activePlayer:
-    data:
-      type: 0
-      name: 
-      finalScore: 0
-      bestCard:
-        suit: 0
-        value: 0
-        type: 0
-    myHand: []
-    currentCardIndex: -1
-    currentState: 0
 --- !u!4 &804219156
 Transform:
   m_ObjectHideFlags: 0

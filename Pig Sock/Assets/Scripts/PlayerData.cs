@@ -19,7 +19,6 @@ public class PlayerData
 
     public PlayerData()
     {
-        name = "SockFan" + Random.Range(101, 999).ToString();
     }
 
     public PlayerData(string name, Type type)
