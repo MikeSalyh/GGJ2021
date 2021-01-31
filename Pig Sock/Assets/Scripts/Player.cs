@@ -4,13 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public class CollectedCard
+{
+    public Card card;
+    public bool wasMatch;
+
+    public CollectedCard(Card c, bool match)
+    {
+        this.card = c;
+        this.wasMatch = match;
+    }
+
+    public CollectedCard() { }
+
+    public int Value
+    {
+        get
+        {
+            if (card == null)
+                return 0;
+            if (wasMatch)
+            {
+                return card.value * GameManager.instance.matchMultiplier;
+            } else{
+                return card.value;
+            }
+        }
+    }
+}
+
 [System.Serializable]
 public class Player
 {
     public string myName = "Name";
     public List<Card> myHand;
     public int currentCardIndex = -1;
-    public int[] roundScores;
+    public CollectedCard[] roundScores;
 
     public int Score
     {
@@ -18,7 +47,7 @@ public class Player
         {
             int output = 0;
             for (int i = 0; i < roundScores.Length; i++)
-                output += roundScores[i] > 0 ? roundScores[i] : 0;
+                output += roundScores[i].Value; 
             return output;
         }
     }
@@ -86,7 +115,7 @@ public class Player
 
     public void EndTurn(Card c = null)
     {
-        roundScores[GameManager.instance.currentRoundIndex] = CurrentPot;
+        roundScores[GameManager.instance.currentRoundIndex] = new CollectedCard(c, c.suit == GameManager.instance.luckySuit);
         currentState = PlayerState.Done;
         if (OnEndTurn != null)
             OnEndTurn.Invoke();
@@ -144,9 +173,9 @@ public class Player
 
     public void HandleNewGame()
     {
-        roundScores = new int[GameManager.instance.maxRounds];
+        roundScores = new CollectedCard[GameManager.instance.maxRounds];
         for (int i = 0; i < roundScores.Length; i++)
-            roundScores[i] = -1;
+            roundScores[i] = new CollectedCard();
     }
 
     public Card CurrentCard

@@ -62,11 +62,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NewGame();
+        Invoke("NewGame", 0.1f); // A little janky; don't start the new game immediately, so other classes can init.
     }
 
     protected void NewGame()
     {
+        Debug.Log("New game!");
         CurrentState = GameState.Playing;
         players = new Player[numPlayers];
         for (int i = 0; i < players.Length; i++)

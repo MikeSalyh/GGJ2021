@@ -49,9 +49,9 @@ public class PlayerGUI : MonoBehaviour
             {
                 scoreList.text += "\n";
                 if (GameManager.instance.currentRoundIndex == i) scoreList.text += "<color=yellow>";
-                scoreList.text += playerRef.roundScores[i] >= 0 ? playerRef.roundScores[i].ToString() : "?";
+                scoreList.text += playerRef.roundScores[i].card == null ? "?" : playerRef.roundScores[i].Value.ToString();
                 if (GameManager.instance.currentRoundIndex == i) scoreList.text += "</color>";
-                finalScore += playerRef.roundScores[i];
+                finalScore += playerRef.roundScores[i].Value;
             }
         }
 
