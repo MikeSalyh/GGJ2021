@@ -22,6 +22,7 @@ public class GameGUI : MonoBehaviour
     public Transform cardCenter;
     public AIAdvisor ai;
     public FinaleManager finale;
+    public GameObject botWaitingPrompt;
 
     private void Awake()
     {
@@ -100,8 +101,16 @@ public class GameGUI : MonoBehaviour
         playersNameText.DOFade(1f, 0.25f);
         controlsArea.DOKill();
         controlsArea.alpha = 0f;
-        controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
-        controlsArea.interactable = GameManager.instance.activePlayer.data.type == PlayerData.Type.Human;
+        if (GameManager.instance.activePlayer.data.type == PlayerData.Type.Human)
+        {
+            controlsArea.DOFade(1f, 0.75f).SetDelay(0.5f).SetEase(Ease.OutQuad);
+            controlsArea.interactable = true;
+        }
+        else
+        {
+            controlsArea.alpha = 0;
+            controlsArea.interactable = false;
+        }
         AudioManager.instance.Play(AudioManager.instance.deckEnter);
 
         if (GameManager.instance.activePlayer.data.type == PlayerData.Type.CPU)
@@ -264,6 +273,7 @@ public class GameGUI : MonoBehaviour
 
     void Update()
     {
+        botWaitingPrompt.gameObject.SetActive(GameManager.instance.activePlayer.data.type == PlayerData.Type.CPU);
         if (GameManager.instance.activePlayer == null || controlsArea.alpha < 0.5f) {
             sockMe.interactable = false;
             takeCard.interactable = false;
