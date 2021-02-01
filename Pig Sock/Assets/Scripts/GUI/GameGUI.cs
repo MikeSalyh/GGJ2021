@@ -44,6 +44,7 @@ public class GameGUI : MonoBehaviour
         GameManager.instance.OnStartTurn += HandleStartTurn;
         GameManager.instance.OnEndTurn += HandleEndTurn;
         GameManager.instance.OnChangeLuckySuit += HandleChangeLuckySuit;
+        HandleChangeLuckySuit();
         sockMe.onClick.AddListener(ClickSockMe);
         takeCard.onClick.AddListener(ClickTakeCard);
     }
@@ -66,7 +67,7 @@ public class GameGUI : MonoBehaviour
 
     void HandleChangeLuckySuit()
     {
-        multiplierText.text = (GameManager.instance.matchMultiplier.ToString() + "x") + " points if matching";
+        multiplierText.text = GameManager.instance.luckySuit.ToString() + " socks are worth double points!";
         luckySuit.flipCard(new Card(GameManager.instance.luckySuit, 1), true);
     }
 

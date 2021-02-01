@@ -7,10 +7,10 @@ public class Card
 {
     public enum Suit
     {
-        Diamonds,
-        Hearts,
-        Spades,
-        Clubs
+        Yellow,
+        Red,
+        Blue,
+        Green
     }
 
     public Suit suit;

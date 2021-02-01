@@ -18,7 +18,7 @@ public class FinaleManager : MonoBehaviour
         {
             MetagameManager.instance.playerData = new PlayerData[1];
             MetagameManager.instance.playerData[0] = new PlayerData("Example", PlayerData.Type.Human);
-            MetagameManager.instance.playerData[0].bestCard = new Card(Card.Suit.Clubs, 10);
+            MetagameManager.instance.playerData[0].bestCard = new Card(Card.Suit.Green, 10);
             MetagameManager.instance.playerData[0].finalScore = 30;
         }
 

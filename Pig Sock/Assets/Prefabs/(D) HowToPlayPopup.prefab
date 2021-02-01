@@ -92,7 +92,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6586572759642694051
 RectTransform:
   m_ObjectHideFlags: 0
@@ -177,14 +177,14 @@ RectTransform:
   m_GameObject: {fileID: 827742919587050197}
   m_LocalRotation: {x: -0, y: -0, z: 0.0380236, w: 0.9992769}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0681717, y: 1.0681717, z: 1.0681717}
+  m_LocalScale: {x: 1.5272293, y: 1.5272293, z: 1.5272293}
   m_Children: []
   m_Father: {fileID: 6179507886456133179}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4.3580003}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -303, y: -72}
+  m_AnchoredPosition: {x: -290, y: -11}
   m_SizeDelta: {x: 129.5625, y: 264}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8788624973392486440
@@ -775,7 +775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4302005386950389910
 RectTransform:
   m_ObjectHideFlags: 0
@@ -822,8 +822,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "You earn double points if your sock matches the color of the <b>Target
-    Color</b>.\r"
+  m_text: 'Keep an eye out. Certain colors are worth
+
+    double'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 007d2625726846c478bbe65e392b1e97, type: 2}
   m_sharedMaterial: {fileID: -787523792149253116, guid: 007d2625726846c478bbe65e392b1e97,
@@ -890,7 +891,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -104.766174, w: -109.93976}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3563075255097004977
@@ -1404,8 +1405,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 38, y: -48}
-  m_SizeDelta: {x: 557.9, y: 118.4}
+  m_AnchoredPosition: {x: 46, y: 67}
+  m_SizeDelta: {x: 423.69, y: 118.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &336172884139147895
 CanvasRenderer:
@@ -1435,7 +1436,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "If you don\u2019t like your sock, press \\n<b>\u201CSock Me\u201D</b>
-    to get a new one. But if you get the <b>Doom Sock</b> you bust and get nothing!\r"
+    to get a new one. But there's a chance you'll get the <b>Doom Sock</b> and bust! 
+    \\n(That's worth 0 points)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 007d2625726846c478bbe65e392b1e97, type: 2}
   m_sharedMaterial: {fileID: -787523792149253116, guid: 007d2625726846c478bbe65e392b1e97,
@@ -1502,7 +1504,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -104.766174, w: -109.93976}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5164569779872499715
@@ -2588,7 +2590,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &293372950321010125
 RectTransform:
   m_ObjectHideFlags: 0
