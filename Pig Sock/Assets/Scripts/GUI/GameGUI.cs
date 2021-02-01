@@ -273,7 +273,8 @@ public class GameGUI : MonoBehaviour
 
     void Update()
     {
-        botWaitingPrompt.gameObject.SetActive(GameManager.instance.activePlayer.data.type == PlayerData.Type.CPU);
+        if(GameManager.instance.activePlayer != null)
+            botWaitingPrompt.gameObject.SetActive(GameManager.instance.activePlayer.data.type == PlayerData.Type.CPU);
         if (GameManager.instance.activePlayer == null || controlsArea.alpha < 0.5f) {
             sockMe.interactable = false;
             takeCard.interactable = false;
