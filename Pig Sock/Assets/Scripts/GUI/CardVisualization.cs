@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 [System.Serializable]
 class SuitSprites
@@ -18,6 +19,7 @@ public class CardVisualization : MonoBehaviour
     [SerializeField] private Sprite jokerSprite;
     [SerializeField] private SuitSprites[] sprites;
     public GameObject specialGraphics;
+    public TextMeshProUGUI valueText;
     private Vector3 defaultScale;
 
     // Start is called before the first frame update
@@ -30,9 +32,23 @@ public class CardVisualization : MonoBehaviour
     public void SetToCard(Card c)
     {
         if (c == null)
+        {
             SetFaceDown();
+        }
         else
+        {
             GetComponent<Image>().sprite = GetSprite(c);
+            if (c.type == Card.CardType.Normal)
+            {
+                if (valueText != null)
+                    valueText.text = c.value.ToString();
+            }
+            else
+            {
+                if (valueText != null)
+                    valueText.text = "X";
+            }
+        }
     }
 
     public void flipCard(Card c, bool showSpecialGraphicsAfterFlip = false, float time = 0.35f)
@@ -109,6 +125,8 @@ public class CardVisualization : MonoBehaviour
     public void SetFaceDown(bool showSpecialGraphics = false)
     {
         image.sprite = backSprite;
+        if(valueText != null)
+            valueText.text = "";
         if (specialGraphics != null)
             specialGraphics.gameObject.SetActive(showSpecialGraphics);
     }
