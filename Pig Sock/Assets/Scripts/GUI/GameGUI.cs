@@ -85,7 +85,7 @@ public class GameGUI : MonoBehaviour
         peekCard.gameObject.SetActive(false);
         card.gameObject.SetActive(true);
         card.SetFaceDown();
-        takeCardText.text = "Take";
+        takeCardText.text = "Bank";
         sockMeText.text = "Sock Me";
 
         GameManager.instance.activePlayer.OnSock += HandleSockMe;
@@ -143,7 +143,7 @@ public class GameGUI : MonoBehaviour
     void HandleBust(Card c)
     {
         sockMeText.text = "Bust!";
-        takeCardText.text = "Take (+0)";
+        takeCardText.text = "Okay";
         card.transform.DOShakePosition(1f, 8f);
         AudioManager.instance.Play(AudioManager.instance.bust);
     }
@@ -220,7 +220,7 @@ public class GameGUI : MonoBehaviour
             card.SetToCard(c);
         }
         string takePhrase = GameManager.instance.activePlayer.CurrentCard.suit == GameManager.instance.luckySuit ? "Pair " : "";
-        takeCardText.text = string.Format("Take {0}(+{1})", takePhrase, GameManager.instance.activePlayer.CurrentPot);
+        takeCardText.text = string.Format("Bank {0}(+{1})", takePhrase, GameManager.instance.activePlayer.CurrentPot);
         peekCard.gameObject.SetActive(false);
         previousCard = c;
     }
