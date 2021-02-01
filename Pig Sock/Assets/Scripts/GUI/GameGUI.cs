@@ -15,12 +15,13 @@ public class GameGUI : MonoBehaviour
 
     public TextMeshProUGUI playersNameText, multiplierText, takeCardText, sockMeText;
     public CardVisualization luckySuit, specialPurposeLucky;
-    public Button sockMe, takeCard, gameOverButton;
+    public Button sockMe, takeCard;
     public CardVisualization card, peekCard, specialPurposeCard, cardBacking;
     public CanvasGroup cardDeckArea, controlsArea;
     public GameObject tutorial, gameplayArea;
     public Transform cardCenter;
     public AIAdvisor ai;
+    public FinaleManager finale;
 
     private void Awake()
     {
@@ -59,9 +60,6 @@ public class GameGUI : MonoBehaviour
         {
             scoreCards[i].SetUp(GameManager.instance.players[i]);
         }
-        //card.SetFaceDown();
-        //peekCard.gameObject.SetActive(false);
-        //luckySuit.SetFaceDown();
         luckySuit.SetToCard(new Card(GameManager.instance.luckySuit, 1));        
     }
 
@@ -125,10 +123,14 @@ public class GameGUI : MonoBehaviour
         cardDeckArea.gameObject.SetActive(false);
         gameplayArea.gameObject.SetActive(false);
         AudioManager.instance.Play(AudioManager.instance.gameEnd);
-        gameOverButton.gameObject.SetActive(true);
-        gameOverButton.GetComponent<CanvasGroup>().alpha = 0;
-        gameOverButton.GetComponent<CanvasGroup>().DOFade(1f, 1f);
+        Invoke("ShowFinale", 1f);
+    }
 
+    void ShowFinale()
+    {
+        finale.gameObject.SetActive(true);
+        finale.GetComponent<CanvasGroup>().alpha = 0;
+        finale.GetComponent<CanvasGroup>().DOFade(1f, 1f);
     }
 
     public void ClickSockMe()
@@ -182,9 +184,11 @@ public class GameGUI : MonoBehaviour
         }
 
         AudioManager.instance.Play(AudioManager.instance.takeSock);
-
         int bestRound = GameManager.instance.currentRoundIndex >= GameManager.instance.maxRounds ? GameManager.instance.maxRounds - 1 : GameManager.instance.currentRoundIndex;
-        specialPurposeCard.CollectAs(c, card.transform, destination.rounds[bestRound].transform);
+        if (c.type == Card.CardType.Normal)
+        {
+            specialPurposeCard.CollectAs(c, card.transform, destination.rounds[bestRound].transform);
+        }
         if (c.suit == GameManager.instance.luckySuit && c.type == Card.CardType.Normal)
         {
             specialPurposeLucky.CollectAs(c, luckySuit.transform, destination.rounds[bestRound].transform);

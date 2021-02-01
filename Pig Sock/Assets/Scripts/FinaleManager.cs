@@ -32,9 +32,10 @@ public class FinaleManager : MonoBehaviour
             }
         }
 
-        card.SetToCard(winner.bestCard);
-        winnerNameLabel.text = string.Format("{0} - {1} Ponts", winner.name, winner.finalScore);
-        bestCardLabel.text = string.Format("{0}'s Best Card: <b><color=yellow>{1}</color></b><br><i>{2}</i>", winner.name, winner.bestCard.Name, winner.bestCard.FlavorText);
+        //card.SetToCard(winner.bestCard);
+        winnerNameLabel.text = winner.name; 
+        //string.Format("{0} - {1} Ponts", winner.name, winner.finalScore);
+        //bestCardLabel.text = string.Format("{0}'s Best Card: <b><color=yellow>{1}</color></b><br><i>{2}</i>", winner.name, winner.bestCard.Name, winner.bestCard.FlavorText);
     }
 
     public void QuitToMenu()
